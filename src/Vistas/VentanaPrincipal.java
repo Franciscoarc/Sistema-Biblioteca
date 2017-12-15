@@ -34,9 +34,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         BtnArrendarLibro = new javax.swing.JButton();
         BtnSalir = new javax.swing.JButton();
         Fondo = new javax.swing.JLabel();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        MenuAutor = new javax.swing.JMenu();
-        RegistrarAutor = new javax.swing.JMenuItem();
+        jMenuBar5 = new javax.swing.JMenuBar();
+        MenuAutor4 = new javax.swing.JMenu();
+        RegistrarAutor4 = new javax.swing.JMenuItem();
         MenuCategoria = new javax.swing.JMenu();
         RegistrarCategoria = new javax.swing.JMenuItem();
         MenuDireccion = new javax.swing.JMenu();
@@ -101,17 +101,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Fondo.jpg"))); // NOI18N
 
-        MenuAutor.setText("Autor");
+        MenuAutor4.setText("Autor");
 
-        RegistrarAutor.setText("Registrar");
-        RegistrarAutor.addActionListener(new java.awt.event.ActionListener() {
+        RegistrarAutor4.setText("Registrar");
+        RegistrarAutor4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RegistrarAutorActionPerformed(evt);
+                RegistrarAutor4ActionPerformed(evt);
             }
         });
-        MenuAutor.add(RegistrarAutor);
+        MenuAutor4.add(RegistrarAutor4);
 
-        jMenuBar1.add(MenuAutor);
+        jMenuBar5.add(MenuAutor4);
 
         MenuCategoria.setText("Categoría");
 
@@ -123,7 +123,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         MenuCategoria.add(RegistrarCategoria);
 
-        jMenuBar1.add(MenuCategoria);
+        jMenuBar5.add(MenuCategoria);
 
         MenuDireccion.setText("Direccion");
 
@@ -135,7 +135,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         MenuDireccion.add(RegistrarDireccion);
 
-        jMenuBar1.add(MenuDireccion);
+        jMenuBar5.add(MenuDireccion);
 
         MenuDistribuidor.setText("Distribuidor");
 
@@ -147,7 +147,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         MenuDistribuidor.add(RegistrarDistribuidor);
 
-        jMenuBar1.add(MenuDistribuidor);
+        jMenuBar5.add(MenuDistribuidor);
 
         MenuEditorial.setText("Editorial");
 
@@ -159,7 +159,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         MenuEditorial.add(RegistrarEditorial);
 
-        jMenuBar1.add(MenuEditorial);
+        jMenuBar5.add(MenuEditorial);
 
         MenuIdioma.setText("Idioma");
 
@@ -171,7 +171,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         MenuIdioma.add(RegistrarIdioma);
 
-        jMenuBar1.add(MenuIdioma);
+        jMenuBar5.add(MenuIdioma);
 
         MenuLibros.setText("Libros");
 
@@ -183,7 +183,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         MenuLibros.add(RegistrarLibros);
 
-        jMenuBar1.add(MenuLibros);
+        jMenuBar5.add(MenuLibros);
 
         MenuMetodosPago.setText("Metodos de Pago");
 
@@ -195,7 +195,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         MenuMetodosPago.add(RegistrarMetodoPago);
 
-        jMenuBar1.add(MenuMetodosPago);
+        jMenuBar5.add(MenuMetodosPago);
 
         MenuEstados.setText("Estados");
 
@@ -207,7 +207,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         MenuEstados.add(RegistrarEstadoLibro);
 
-        jMenuBar1.add(MenuEstados);
+        jMenuBar5.add(MenuEstados);
 
         MenuTelefono.setText("Telefono");
 
@@ -219,7 +219,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         MenuTelefono.add(RegistrarTelefono);
 
-        jMenuBar1.add(MenuTelefono);
+        jMenuBar5.add(MenuTelefono);
 
         MenuTrabajador.setText("Trabajador");
 
@@ -231,9 +231,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         MenuTrabajador.add(RegistrarTrabajador);
 
-        jMenuBar1.add(MenuTrabajador);
+        jMenuBar5.add(MenuTrabajador);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(jMenuBar5);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -295,11 +295,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_BtnSalirActionPerformed
 
-    private void RegistrarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarAutorActionPerformed
-        RegistroLibro registroAutor = new RegistroLibro();
+    private void RegistrarAutor4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarAutor4ActionPerformed
+        RegistroAutor registroAutor = new RegistroAutor();
         registroAutor.setVisible(true);
         registroAutor.setResizable(false);
-    }//GEN-LAST:event_RegistrarAutorActionPerformed
+    }//GEN-LAST:event_RegistrarAutor4ActionPerformed
 
     private void RegistrarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarCategoriaActionPerformed
         RegistroCategoria registroCategoria = new RegistroCategoria();
@@ -403,7 +403,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton BtnDevolverLibro;
     private javax.swing.JButton BtnSalir;
     private javax.swing.JLabel Fondo;
-    private javax.swing.JMenu MenuAutor;
+    private javax.swing.JMenu MenuAutor4;
     private javax.swing.JMenu MenuCategoria;
     private javax.swing.JMenu MenuDireccion;
     private javax.swing.JMenu MenuDistribuidor;
@@ -414,7 +414,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu MenuMetodosPago;
     private javax.swing.JMenu MenuTelefono;
     private javax.swing.JMenu MenuTrabajador;
-    private javax.swing.JMenuItem RegistrarAutor;
+    private javax.swing.JMenuItem RegistrarAutor4;
     private javax.swing.JMenuItem RegistrarCategoria;
     private javax.swing.JMenuItem RegistrarDireccion;
     private javax.swing.JMenuItem RegistrarDistribuidor;
@@ -426,7 +426,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem RegistrarTelefono;
     private javax.swing.JMenuItem RegistrarTrabajador;
     private javax.swing.JLabel Titulo;
-    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar5;
     private javax.swing.JMenuItem jMenuItem3;
     // End of variables declaration//GEN-END:variables
 }

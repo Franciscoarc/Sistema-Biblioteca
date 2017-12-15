@@ -89,9 +89,9 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
         comboEstado = new javax.swing.JComboBox<>();
         btnAñadirIdioma = new javax.swing.JButton();
         Fondo = new javax.swing.JLabel();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        MenuAutor = new javax.swing.JMenu();
-        RegistrarAutor = new javax.swing.JMenuItem();
+        jMenuBar5 = new javax.swing.JMenuBar();
+        MenuAutor4 = new javax.swing.JMenu();
+        RegistrarAutor4 = new javax.swing.JMenuItem();
         MenuCategoria = new javax.swing.JMenu();
         RegistrarCategoria = new javax.swing.JMenuItem();
         MenuDireccion = new javax.swing.JMenu();
@@ -355,17 +355,17 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
         Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo.jpg"))); // NOI18N
         PanelPrincipal.add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 500));
 
-        MenuAutor.setText("Autor");
+        MenuAutor4.setText("Autor");
 
-        RegistrarAutor.setText("Registrar");
-        RegistrarAutor.addActionListener(new java.awt.event.ActionListener() {
+        RegistrarAutor4.setText("Registrar");
+        RegistrarAutor4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RegistrarAutorActionPerformed(evt);
+                RegistrarAutor4ActionPerformed(evt);
             }
         });
-        MenuAutor.add(RegistrarAutor);
+        MenuAutor4.add(RegistrarAutor4);
 
-        jMenuBar1.add(MenuAutor);
+        jMenuBar5.add(MenuAutor4);
 
         MenuCategoria.setText("Categoría");
 
@@ -377,7 +377,7 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
         });
         MenuCategoria.add(RegistrarCategoria);
 
-        jMenuBar1.add(MenuCategoria);
+        jMenuBar5.add(MenuCategoria);
 
         MenuDireccion.setText("Direccion");
 
@@ -389,7 +389,7 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
         });
         MenuDireccion.add(RegistrarDireccion);
 
-        jMenuBar1.add(MenuDireccion);
+        jMenuBar5.add(MenuDireccion);
 
         MenuDistribuidor.setText("Distribuidor");
 
@@ -401,7 +401,7 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
         });
         MenuDistribuidor.add(RegistrarDistribuidor);
 
-        jMenuBar1.add(MenuDistribuidor);
+        jMenuBar5.add(MenuDistribuidor);
 
         MenuEditorial.setText("Editorial");
 
@@ -413,7 +413,7 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
         });
         MenuEditorial.add(RegistrarEditorial);
 
-        jMenuBar1.add(MenuEditorial);
+        jMenuBar5.add(MenuEditorial);
 
         MenuIdioma.setText("Idioma");
 
@@ -425,7 +425,7 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
         });
         MenuIdioma.add(RegistrarIdioma);
 
-        jMenuBar1.add(MenuIdioma);
+        jMenuBar5.add(MenuIdioma);
 
         MenuLibros.setText("Libros");
 
@@ -437,7 +437,7 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
         });
         MenuLibros.add(RegistrarLibros);
 
-        jMenuBar1.add(MenuLibros);
+        jMenuBar5.add(MenuLibros);
 
         MenuMetodosPago.setText("Metodos de Pago");
 
@@ -449,7 +449,7 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
         });
         MenuMetodosPago.add(RegistrarMetodoPago);
 
-        jMenuBar1.add(MenuMetodosPago);
+        jMenuBar5.add(MenuMetodosPago);
 
         MenuEstados.setText("Estados");
 
@@ -461,7 +461,7 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
         });
         MenuEstados.add(RegistrarEstadoLibro);
 
-        jMenuBar1.add(MenuEstados);
+        jMenuBar5.add(MenuEstados);
 
         MenuTelefono.setText("Telefono");
 
@@ -473,7 +473,7 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
         });
         MenuTelefono.add(RegistrarTelefono);
 
-        jMenuBar1.add(MenuTelefono);
+        jMenuBar5.add(MenuTelefono);
 
         MenuTrabajador.setText("Trabajador");
 
@@ -485,9 +485,9 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
         });
         MenuTrabajador.add(RegistrarTrabajador);
 
-        jMenuBar1.add(MenuTrabajador);
+        jMenuBar5.add(MenuTrabajador);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(jMenuBar5);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -497,7 +497,9 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PanelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(PanelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -552,11 +554,15 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
         modificar();
     }//GEN-LAST:event_btnModificarActionPerformed
 
-    private void RegistrarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarAutorActionPerformed
-        RegistroLibro registroAutor = new RegistroLibro();
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        buscarPor();
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void RegistrarAutor4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarAutor4ActionPerformed
+        RegistroAutor registroAutor = new RegistroAutor();
         registroAutor.setVisible(true);
         registroAutor.setResizable(false);
-    }//GEN-LAST:event_RegistrarAutorActionPerformed
+    }//GEN-LAST:event_RegistrarAutor4ActionPerformed
 
     private void RegistrarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarCategoriaActionPerformed
         RegistroCategoria registroCategoria = new RegistroCategoria();
@@ -588,6 +594,12 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
         registroIdioma.setResizable(false);
     }//GEN-LAST:event_RegistrarIdiomaActionPerformed
 
+    private void RegistrarLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarLibrosActionPerformed
+        RegistroLibro registroLibro = new RegistroLibro();
+        registroLibro.setVisible(true);
+        registroLibro.setResizable(false);
+    }//GEN-LAST:event_RegistrarLibrosActionPerformed
+
     private void RegistrarMetodoPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarMetodoPagoActionPerformed
         RegistroMetodoPago metodoPago = new RegistroMetodoPago();
         metodoPago.setVisible(true);
@@ -611,16 +623,6 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
         registroTrabajador.setVisible(true);
         registroTrabajador.setResizable(false);
     }//GEN-LAST:event_RegistrarTrabajadorActionPerformed
-
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        buscarPor();
-    }//GEN-LAST:event_btnBuscarActionPerformed
-
-    private void RegistrarLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarLibrosActionPerformed
-        RegistroLibro registroLibro = new RegistroLibro();
-        registroLibro.setVisible(true);
-        registroLibro.setResizable(false);
-    }//GEN-LAST:event_RegistrarLibrosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -661,6 +663,10 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Fondo;
     private javax.swing.JMenu MenuAutor;
+    private javax.swing.JMenu MenuAutor1;
+    private javax.swing.JMenu MenuAutor2;
+    private javax.swing.JMenu MenuAutor3;
+    private javax.swing.JMenu MenuAutor4;
     private javax.swing.JMenu MenuCategoria;
     private javax.swing.JMenu MenuDireccion;
     private javax.swing.JMenu MenuDistribuidor;
@@ -673,6 +679,10 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
     private javax.swing.JMenu MenuTrabajador;
     private javax.swing.JPanel PanelPrincipal;
     private javax.swing.JMenuItem RegistrarAutor;
+    private javax.swing.JMenuItem RegistrarAutor1;
+    private javax.swing.JMenuItem RegistrarAutor2;
+    private javax.swing.JMenuItem RegistrarAutor3;
+    private javax.swing.JMenuItem RegistrarAutor4;
     private javax.swing.JMenuItem RegistrarCategoria;
     private javax.swing.JMenuItem RegistrarDireccion;
     private javax.swing.JMenuItem RegistrarDistribuidor;
@@ -699,6 +709,10 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
     private javax.swing.JComboBox<String> comboLibro;
     private javax.swing.JButton jButton1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuBar jMenuBar3;
+    private javax.swing.JMenuBar jMenuBar4;
+    private javax.swing.JMenuBar jMenuBar5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

@@ -294,7 +294,7 @@ public class ComprarLibros extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVerFacturaActionPerformed
 
     private void RegistrarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarAutorActionPerformed
-        RegistroLibro registroAutor = new RegistroLibro();
+        RegistroAutor registroAutor = new RegistroAutor();
         registroAutor.setVisible(true);
         registroAutor.setResizable(false);
     }//GEN-LAST:event_RegistrarAutorActionPerformed
