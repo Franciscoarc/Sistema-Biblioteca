@@ -60,7 +60,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jMenuItem3.setText("jMenuItem3");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         Titulo.setFont(new java.awt.Font("Cambria Math", 1, 36)); // NOI18N
         Titulo.setForeground(new java.awt.Color(255, 255, 255));

@@ -12,10 +12,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -31,6 +36,7 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
     int modificar;
 
     public RegistroLibro() {
+
         initComponents();
         listar();
         limpiar();
@@ -39,6 +45,7 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
         llenarComboIdioma();
         llenarComboCategoria();
         llenarComboEstado();
+        llenarListaAutores();
     }
 
     @SuppressWarnings("unchecked")
@@ -84,10 +91,15 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
         btnAñadirEstado = new javax.swing.JButton();
         lblCategoria = new javax.swing.JLabel();
         comboCategoria = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        btnAñadirCategoria = new javax.swing.JButton();
         lblEstado = new javax.swing.JLabel();
         comboEstado = new javax.swing.JComboBox<>();
         btnAñadirIdioma = new javax.swing.JButton();
+        lblAutores = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        listaAutores = new javax.swing.JList<>();
+        btnRecargar = new javax.swing.JButton();
+        btnAñadirAutor = new javax.swing.JButton();
         Fondo = new javax.swing.JLabel();
         jMenuBar5 = new javax.swing.JMenuBar();
         MenuAutor4 = new javax.swing.JMenu();
@@ -151,20 +163,20 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
         lblISBN.setForeground(new java.awt.Color(255, 255, 255));
         lblISBN.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblISBN.setText("ISBN");
-        PanelPrincipal.add(lblISBN, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 70, 90, 20));
+        PanelPrincipal.add(lblISBN, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 70, 90, 20));
 
         lblTitulo.setFont(new java.awt.Font("Candara", 1, 12)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitulo.setText("Título");
-        PanelPrincipal.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 100, 110, 20));
+        PanelPrincipal.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 110, 20));
 
         lblAñoPublicacionLibro.setFont(new java.awt.Font("Candara", 1, 12)); // NOI18N
         lblAñoPublicacionLibro.setForeground(new java.awt.Color(255, 255, 255));
         lblAñoPublicacionLibro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAñoPublicacionLibro.setText("Año de Publicación");
-        PanelPrincipal.add(lblAñoPublicacionLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 100, 120, 20));
-        PanelPrincipal.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 800, 10));
+        PanelPrincipal.add(lblAñoPublicacionLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 110, 120, 20));
+        PanelPrincipal.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 890, 10));
 
         btnRegistrar.setText("Registrar");
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
@@ -172,7 +184,7 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
                 btnRegistrarActionPerformed(evt);
             }
         });
-        PanelPrincipal.add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 250, -1, -1));
+        PanelPrincipal.add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 360, -1, -1));
 
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -180,7 +192,7 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
                 btnModificarActionPerformed(evt);
             }
         });
-        PanelPrincipal.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 250, -1, -1));
+        PanelPrincipal.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 360, -1, -1));
 
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -188,7 +200,7 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
                 btnEliminarActionPerformed(evt);
             }
         });
-        PanelPrincipal.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 250, -1, -1));
+        PanelPrincipal.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 360, -1, -1));
 
         btnLimpiar.setText("Limpiar Campos");
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
@@ -196,16 +208,16 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
                 btnLimpiarActionPerformed(evt);
             }
         });
-        PanelPrincipal.add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, -1, -1));
+        PanelPrincipal.add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 360, -1, -1));
         PanelPrincipal.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, -1, -1));
         PanelPrincipal.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, -1, -1));
-        PanelPrincipal.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 800, 10));
+        PanelPrincipal.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, 900, 10));
 
         lblBuscar.setForeground(new java.awt.Color(255, 255, 255));
         lblBuscar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblBuscar.setText("Buscar por");
-        PanelPrincipal.add(lblBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 310, 70, 20));
-        PanelPrincipal.add(txtBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 310, 130, -1));
+        PanelPrincipal.add(lblBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 430, 70, 20));
+        PanelPrincipal.add(txtBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 430, 130, -1));
 
         tablaLibros = new javax.swing.JTable(){
             public boolean isCellEditable(int rowIndex, int colIndex){
@@ -235,7 +247,7 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
         jScrollPane2.setViewportView(tablaLibros);
         tablaLibros.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
-        PanelPrincipal.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 340, 630, 130));
+        PanelPrincipal.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 470, 800, 140));
 
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -243,7 +255,7 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
                 btnBuscarActionPerformed(evt);
             }
         });
-        PanelPrincipal.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 310, -1, -1));
+        PanelPrincipal.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 430, -1, -1));
 
         try {
             txtISBNLibro.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#############")));
@@ -251,17 +263,17 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
             ex.printStackTrace();
         }
         txtISBNLibro.setFocusLostBehavior(javax.swing.JFormattedTextField.PERSIST);
-        PanelPrincipal.add(txtISBNLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 70, 150, -1));
+        PanelPrincipal.add(txtISBNLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 70, 160, -1));
 
         comboLibro.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         comboLibro.setAutoscrolls(true);
-        PanelPrincipal.add(comboLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 310, 120, -1));
+        PanelPrincipal.add(comboLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 430, 160, -1));
 
         lblNumeroSerie.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         lblNumeroSerie.setForeground(new java.awt.Color(255, 255, 255));
         lblNumeroSerie.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblNumeroSerie.setText("Número de Serie");
-        PanelPrincipal.add(lblNumeroSerie, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 110, 20));
+        PanelPrincipal.add(lblNumeroSerie, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 110, 20));
 
         try {
             txtNumeroSerieLibro.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##########")));
@@ -269,13 +281,13 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
             ex.printStackTrace();
         }
         txtNumeroSerieLibro.setFocusLostBehavior(javax.swing.JFormattedTextField.PERSIST);
-        PanelPrincipal.add(txtNumeroSerieLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, 170, -1));
+        PanelPrincipal.add(txtNumeroSerieLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 170, -1));
 
         lblNumeroPaginas.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         lblNumeroPaginas.setForeground(new java.awt.Color(255, 255, 255));
         lblNumeroPaginas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblNumeroPaginas.setText("Número de Páginas");
-        PanelPrincipal.add(lblNumeroPaginas, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, -1, 20));
+        PanelPrincipal.add(lblNumeroPaginas, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 160, 120, 20));
 
         try {
             txtNumeroPaginasLibro.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#####")));
@@ -283,13 +295,13 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
             ex.printStackTrace();
         }
         txtNumeroPaginasLibro.setFocusLostBehavior(javax.swing.JFormattedTextField.PERSIST);
-        PanelPrincipal.add(txtNumeroPaginasLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 130, 170, -1));
+        PanelPrincipal.add(txtNumeroPaginasLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 160, 160, -1));
 
         lblPrecioReferencia.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         lblPrecioReferencia.setForeground(new java.awt.Color(255, 255, 255));
         lblPrecioReferencia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblPrecioReferencia.setText("Precio de Referencia");
-        PanelPrincipal.add(lblPrecioReferencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 130, 150, 20));
+        PanelPrincipal.add(lblPrecioReferencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 200, 150, 20));
 
         try {
             txtPrecioLibro.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("########")));
@@ -297,19 +309,25 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
             ex.printStackTrace();
         }
         txtPrecioLibro.setFocusLostBehavior(javax.swing.JFormattedTextField.PERSIST);
-        PanelPrincipal.add(txtPrecioLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 130, 150, -1));
+        PanelPrincipal.add(txtPrecioLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 200, 160, -1));
 
         lblNombreEditorial.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         lblNombreEditorial.setForeground(new java.awt.Color(255, 255, 255));
         lblNombreEditorial.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblNombreEditorial.setText("Nombre Editorial");
-        PanelPrincipal.add(lblNombreEditorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(94, 160, 90, -1));
+        PanelPrincipal.add(lblNombreEditorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 260, 90, -1));
 
-        PanelPrincipal.add(comboEditorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 160, 150, -1));
+        comboEditorial.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        PanelPrincipal.add(comboEditorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 260, 150, -1));
 
         btnAñadirEditorial.setText("Añadir");
-        PanelPrincipal.add(btnAñadirEditorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 160, 70, -1));
-        PanelPrincipal.add(txtTituloLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 100, 170, -1));
+        btnAñadirEditorial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAñadirEditorialActionPerformed(evt);
+            }
+        });
+        PanelPrincipal.add(btnAñadirEditorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 260, 80, -1));
+        PanelPrincipal.add(txtTituloLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 170, -1));
 
         try {
             txtAñoLibro.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####")));
@@ -317,43 +335,87 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
             ex.printStackTrace();
         }
         txtAñoLibro.setFocusLostBehavior(javax.swing.JFormattedTextField.PERSIST);
-        PanelPrincipal.add(txtAñoLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 100, 150, -1));
+        PanelPrincipal.add(txtAñoLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 110, 160, -1));
 
         lblIdioma.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         lblIdioma.setForeground(new java.awt.Color(255, 255, 255));
         lblIdioma.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblIdioma.setText("Idioma");
-        PanelPrincipal.add(lblIdioma, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 160, 60, 20));
+        PanelPrincipal.add(lblIdioma, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 260, 60, 20));
 
-        PanelPrincipal.add(comboIdioma, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 160, 130, -1));
+        PanelPrincipal.add(comboIdioma, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 260, 130, -1));
 
         btnAñadirEstado.setText("Añadir");
-        PanelPrincipal.add(btnAñadirEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 200, 70, -1));
+        btnAñadirEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAñadirEstadoActionPerformed(evt);
+            }
+        });
+        PanelPrincipal.add(btnAñadirEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 290, 90, -1));
 
         lblCategoria.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         lblCategoria.setForeground(new java.awt.Color(255, 255, 255));
         lblCategoria.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblCategoria.setText("Categoria");
-        PanelPrincipal.add(lblCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 190, 80, -1));
+        PanelPrincipal.add(lblCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 290, 80, -1));
 
-        PanelPrincipal.add(comboCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 190, 150, -1));
+        PanelPrincipal.add(comboCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 290, 150, -1));
 
-        jButton1.setText("Añadir");
-        PanelPrincipal.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 190, 70, -1));
+        btnAñadirCategoria.setText("Añadir");
+        btnAñadirCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAñadirCategoriaActionPerformed(evt);
+            }
+        });
+        PanelPrincipal.add(btnAñadirCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 290, 80, -1));
 
         lblEstado.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         lblEstado.setForeground(new java.awt.Color(255, 255, 255));
         lblEstado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblEstado.setText("Estado");
-        PanelPrincipal.add(lblEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 200, 60, -1));
+        PanelPrincipal.add(lblEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 290, 60, 20));
 
-        PanelPrincipal.add(comboEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 200, 130, -1));
+        PanelPrincipal.add(comboEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 290, 130, -1));
 
         btnAñadirIdioma.setText("Añadir");
-        PanelPrincipal.add(btnAñadirIdioma, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 160, 70, -1));
+        btnAñadirIdioma.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAñadirIdiomaActionPerformed(evt);
+            }
+        });
+        PanelPrincipal.add(btnAñadirIdioma, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 260, 90, -1));
 
-        Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo.jpg"))); // NOI18N
-        PanelPrincipal.add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 500));
+        lblAutores.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
+        lblAutores.setForeground(new java.awt.Color(255, 255, 255));
+        lblAutores.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblAutores.setText("Autor(es)");
+        PanelPrincipal.add(lblAutores, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, 70, -1));
+
+        listaAutores.setToolTipText("");
+        listaAutores.setName(""); // NOI18N
+        listaAutores.setSelectedIndex(0);
+        jScrollPane3.setViewportView(listaAutores);
+
+        PanelPrincipal.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, 190, 80));
+
+        btnRecargar.setText("Recargar Datos");
+        btnRecargar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRecargarActionPerformed(evt);
+            }
+        });
+        PanelPrincipal.add(btnRecargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, 120, -1));
+
+        btnAñadirAutor.setText("Añadir");
+        btnAñadirAutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAñadirAutorActionPerformed(evt);
+            }
+        });
+        PanelPrincipal.add(btnAñadirAutor, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 160, 90, 30));
+
+        Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/FondoLibro.jpg"))); // NOI18N
+        PanelPrincipal.add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 630));
 
         MenuAutor4.setText("Autor");
 
@@ -497,9 +559,7 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(PanelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(PanelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -525,22 +585,25 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
             String ISBN = tablaLibros.getValueAt(filaSeleccionada, 1).toString();
             String titulo = tablaLibros.getValueAt(filaSeleccionada, 2).toString();
             String año = tablaLibros.getValueAt(filaSeleccionada, 3).toString();
-            String numeroPaginas = tablaLibros.getValueAt(filaSeleccionada, 4).toString();
-            String precio = tablaLibros.getValueAt(filaSeleccionada, 5).toString();
-            
-            String editorial = tablaLibros.getValueAt(filaSeleccionada, 6).toString();
-            String idioma = tablaLibros.getValueAt(filaSeleccionada, 7).toString();
-            String categoria = tablaLibros.getValueAt(filaSeleccionada, 8).toString();
-            String estado = tablaLibros.getValueAt(filaSeleccionada, 9).toString();
-           
+            String autores = tablaLibros.getValueAt(filaSeleccionada, 4).toString();
+            String numeroPaginas = tablaLibros.getValueAt(filaSeleccionada, 5).toString();
+            String precio = tablaLibros.getValueAt(filaSeleccionada, 6).toString();
+
+            String editorial = tablaLibros.getValueAt(filaSeleccionada, 7).toString();
+            String idioma = tablaLibros.getValueAt(filaSeleccionada, 8).toString();
+            String categoria = tablaLibros.getValueAt(filaSeleccionada, 9).toString();
+            String estado = tablaLibros.getValueAt(filaSeleccionada, 10).toString();
 
             txtNumeroSerieLibro.setText(numeroSerie);
+            txtNumeroSerieLibro.setEnabled(false);
             txtISBNLibro.setText(ISBN);
             txtTituloLibro.setText(titulo);
             txtAñoLibro.setText(año);
+            listaAutores.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            listaAutores.setSelectedValue(autores, true);
             txtNumeroPaginasLibro.setText(numeroPaginas);
             txtPrecioLibro.setText(precio);
-           
+
             comboEditorial.setSelectedItem(editorial);
             comboIdioma.setSelectedItem(idioma);
             comboCategoria.setSelectedItem(categoria);
@@ -624,6 +687,46 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
         registroTrabajador.setResizable(false);
     }//GEN-LAST:event_RegistrarTrabajadorActionPerformed
 
+    private void btnRecargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecargarActionPerformed
+        listar();
+        llenarCombo();
+        llenarComboEditorial();
+        llenarComboIdioma();
+        llenarComboCategoria();
+        llenarComboEstado();
+        llenarListaAutores();
+    }//GEN-LAST:event_btnRecargarActionPerformed
+
+    private void btnAñadirEditorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirEditorialActionPerformed
+        RegistroEditorial registroEditorial = new RegistroEditorial();
+        registroEditorial.setVisible(true);
+        registroEditorial.setResizable(false);
+    }//GEN-LAST:event_btnAñadirEditorialActionPerformed
+
+    private void btnAñadirIdiomaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirIdiomaActionPerformed
+        RegistroIdioma registroIdioma = new RegistroIdioma();
+        registroIdioma.setVisible(true);
+        registroIdioma.setResizable(false);
+    }//GEN-LAST:event_btnAñadirIdiomaActionPerformed
+
+    private void btnAñadirCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirCategoriaActionPerformed
+        RegistroCategoria registroCategoria = new RegistroCategoria();
+        registroCategoria.setVisible(true);
+        registroCategoria.setResizable(false);
+    }//GEN-LAST:event_btnAñadirCategoriaActionPerformed
+
+    private void btnAñadirEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirEstadoActionPerformed
+        RegistroEstadoLibro registroEstadoLibro = new RegistroEstadoLibro();
+        registroEstadoLibro.setVisible(true);
+        registroEstadoLibro.setResizable(false);
+    }//GEN-LAST:event_btnAñadirEstadoActionPerformed
+
+    private void btnAñadirAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirAutorActionPerformed
+        RegistroAutor registroAutor = new RegistroAutor();
+        registroAutor.setVisible(true);
+        registroAutor.setResizable(false);
+    }//GEN-LAST:event_btnAñadirAutorActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -662,10 +765,6 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Fondo;
-    private javax.swing.JMenu MenuAutor;
-    private javax.swing.JMenu MenuAutor1;
-    private javax.swing.JMenu MenuAutor2;
-    private javax.swing.JMenu MenuAutor3;
     private javax.swing.JMenu MenuAutor4;
     private javax.swing.JMenu MenuCategoria;
     private javax.swing.JMenu MenuDireccion;
@@ -678,10 +777,6 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
     private javax.swing.JMenu MenuTelefono;
     private javax.swing.JMenu MenuTrabajador;
     private javax.swing.JPanel PanelPrincipal;
-    private javax.swing.JMenuItem RegistrarAutor;
-    private javax.swing.JMenuItem RegistrarAutor1;
-    private javax.swing.JMenuItem RegistrarAutor2;
-    private javax.swing.JMenuItem RegistrarAutor3;
     private javax.swing.JMenuItem RegistrarAutor4;
     private javax.swing.JMenuItem RegistrarCategoria;
     private javax.swing.JMenuItem RegistrarDireccion;
@@ -694,6 +789,8 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
     private javax.swing.JMenuItem RegistrarTelefono;
     private javax.swing.JMenuItem RegistrarTrabajador;
     private javax.swing.JLabel Titulo;
+    private javax.swing.JButton btnAñadirAutor;
+    private javax.swing.JButton btnAñadirCategoria;
     private javax.swing.JButton btnAñadirEditorial;
     private javax.swing.JButton btnAñadirEstado;
     private javax.swing.JButton btnAñadirIdioma;
@@ -701,26 +798,24 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnRecargar;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JComboBox<String> comboCategoria;
     private javax.swing.JComboBox<String> comboEditorial;
     private javax.swing.JComboBox<String> comboEstado;
     private javax.swing.JComboBox<String> comboIdioma;
     private javax.swing.JComboBox<String> comboLibro;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuBar jMenuBar2;
-    private javax.swing.JMenuBar jMenuBar3;
-    private javax.swing.JMenuBar jMenuBar4;
     private javax.swing.JMenuBar jMenuBar5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblAutores;
     private javax.swing.JLabel lblAñoPublicacionLibro;
     private javax.swing.JLabel lblBuscar;
     private javax.swing.JLabel lblCategoria;
@@ -732,6 +827,7 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
     private javax.swing.JLabel lblNumeroSerie;
     private javax.swing.JLabel lblPrecioReferencia;
     private javax.swing.JLabel lblTitulo;
+    private javax.swing.JList<String> listaAutores;
     private javax.swing.JTable tablaLibros;
     private javax.swing.JFormattedTextField txtAñoLibro;
     private javax.swing.JTextField txtBusqueda;
@@ -760,85 +856,145 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
     @Override
     public void modificar() {
         try {
+            con.setAutoCommit(false);
+
+            //Extraer DATOS DESDE CAMPOS para Actualizar
+            List<String> autores = listaAutores.getSelectedValuesList();
+            //Pedir datos para la inserción en ambas tablas
             int numeroSerie = Integer.parseInt(txtNumeroSerieLibro.getText().trim());
             String ISBN = txtISBNLibro.getText().trim();
             String titulo = txtTituloLibro.getText().trim();
             int año = Integer.parseInt(txtAñoLibro.getText().trim());
+            //List<String> autores = listaAutores.getSelectedValuesList();
             int numeroPaginas = Integer.parseInt(txtNumeroPaginasLibro.getText().trim());
             int precio = Integer.parseInt(txtPrecioLibro.getText().trim());
             String editorial = comboEditorial.getSelectedItem().toString();
             String idioma = comboIdioma.getSelectedItem().toString();
             String categoria = comboCategoria.getSelectedItem().toString();
             String estado = comboEstado.getSelectedItem().toString();
-            String sql = "UPDATE LIBRO SET NUMERO_DE_SERIE = " + numeroSerie + ", ISBN = " + ISBN + ", TITULO = '" + titulo + "', AÑO_PUBLICACIÓN = " + año + ", NUMERO_DE_PÁGINAS = " + numeroPaginas + ",PRECIO_REFERENCIA =" + precio + ",EDITORIAL_NOMBRE = '" + editorial + "', IDIOMA_IDIOMA = '" + idioma + "',CATEGORIA_TIPO = '" + categoria + "', REGISTRO_ESTADO = '" + estado + "' WHERE NUMERO_DE_SERIE =" + modificar + "";
-            ps = con.prepareStatement(sql);
-            int res = ps.executeUpdate();
-            if (res > 0) {
-                limpiar();
-                listar();
-                JOptionPane.showMessageDialog(null, "Se ha modificar satisfactoriamente su registro", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
-            }
+
+            //Busqueda de nombres y rut a partir de los autores elegidos
+            ArrayList nombres = devuelveNombres(autores);
+            String ruts = devuelveRut(nombres);
+
+            //UPDATES PARA CADA LISTA
+            String sqlLibro = "UPDATE LIBRO SET ISBN = '" + ISBN + "' , TITULO = '" + titulo + "' ,\n"
+                    + "\"AÑO_PUBLICACIÓN\" = " + año + " , \"NUMERO_DE_PÁGINAS\" = " + numeroPaginas + " ,\n"
+                    + "PRECIO_REFERENCIA = " + precio + " , EDITORIAL_NOMBRE = '" + editorial + "' ,\n"
+                    + "IDIOMA_IDIOMA = '" + idioma + "' , CATEGORIA_TIPO = '" + categoria + "' ,\n"
+                    + "REGISTRO_ESTADO  = '" + estado + "'\n"
+                    + "WHERE NUMERO_DE_SERIE = " + modificar + " ";
+
+            String sqlUnion = "UPDATE AUTOR_LIBRO \n"
+                    + "SET AUTOR_RUT = '" + ruts + "'\n"
+                    + "WHERE LIBRO_NUMERO_DE_SERIE = " + modificar + " ";
+
+            //Inserción en la tabla Libros
+            ps = con.prepareStatement(sqlLibro);
+            ps.executeUpdate();
+
+            ps = con.prepareStatement(sqlUnion);
+            ps.executeUpdate();
+            con.commit();
+            JOptionPane.showMessageDialog(null, "Se ha modificado correctamente el valor en la base de datos", "Mensaje de Confirmación", JOptionPane.INFORMATION_MESSAGE);
+            limpiar();
+            listar();
+            con.commit();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Ya existe el nombre en nuestra Base de datos", "Confirmación", JOptionPane.ERROR_MESSAGE);
+            String mensaje = "";
+            if (txtNumeroSerieLibro.getText().trim().length() == 0) {
+                mensaje = mensaje.concat("No se ha ingresado ningún Número de Serie \n");
+            } else if (txtISBNLibro.getText().trim().length() == 0) {
+                mensaje = mensaje.concat("No se ha ingresado ningún ISBN \n");
+            } else if (txtISBNLibro.getText().trim().length() != 13) {
+                mensaje = mensaje.concat("No se ha ingresado un ISBN válido \n");
+            } else if (txtTituloLibro.getText().trim().length() == 0) {
+                mensaje = mensaje.concat("No se ha ingresado ningún Título \n");
+            } else if (txtAñoLibro.getText().trim().length() == 0) {
+                mensaje = mensaje.concat("No se ha ingresado Año de Publicación \n");
+            } else if (txtNumeroPaginasLibro.getText().trim().length() == 0) {
+                mensaje = mensaje.concat("No se ha ingresado Número de Páginas \n");
+            } else {
+                try {
+                    con.rollback();
+                } catch (SQLException ex1) {
+                    mensaje = mensaje.concat("El Número de Serie y/o el Autor ya está en uso \n");
+                }
+            }
+            JOptionPane.showMessageDialog(null, mensaje, "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     public void llenarCombo() {
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+        comboLibro.setModel(modelo);
         try {
-            String sql = "SELECT * FROM Libro";
+            String sql = "SELECT * FROM Libro li";
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             ResultSetMetaData rsmd = rs.getMetaData();
             int cantColumnas = rsmd.getColumnCount();
             for (int i = 1; i <= cantColumnas; i++) {
-                comboLibro.addItem(rsmd.getColumnName(i).replace('_', ' '));
+                comboLibro.addItem(rsmd.getColumnName(i));
             }
         } catch (SQLException ex) {
             Logger.getLogger(RegistroLibro.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     public void llenarComboEditorial() {
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+        comboEditorial.setModel(modelo);
         try {
             String sql = "SELECT * FROM Editorial";
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 comboEditorial.addItem(rs.getString("NOMBRE"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(RegistroLibro.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     public void llenarComboIdioma() {
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+        comboIdioma.setModel(modelo);
         try {
             String sql = "SELECT * FROM Idioma";
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 comboIdioma.addItem(rs.getString("IDIOMA"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(RegistroLibro.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     public void llenarComboCategoria() {
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+        comboCategoria.setModel(modelo);
         try {
             String sql = "SELECT * FROM Categoria";
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 comboCategoria.addItem(rs.getString("TIPO"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(RegistroLibro.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     public void llenarComboEstado() {
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+        comboEstado.setModel(modelo);
         try {
             String sql = "SELECT * FROM Registro";
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 comboEstado.addItem(rs.getString("ESTADO"));
             }
         } catch (SQLException ex) {
@@ -846,22 +1002,53 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
         }
     }
 
+    public void llenarListaAutores() {
+        DefaultListModel modelolista = new DefaultListModel();
+
+        try {
+            String sql = "SELECT * FROM Autor";
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                modelolista.addElement(rs.getString("NOMBRE").concat(" ").concat(rs.getString("APELLIDO_PATERNO").concat(" ").concat(rs.getString("APELLIDO_MATERNO"))));
+            }
+
+            listaAutores.setModel(modelolista);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(RegistroLibro.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     @Override
     public void insertar() {
         try {
-            String sql = "INSERT INTO Libro VALUES(?,?,?,?,?,?,?,?,?,?)";
-            ps = con.prepareStatement(sql);
+            con.setAutoCommit(false);
+            //Instrucciones sql para insertar los datos en sus respectivas tablas
+            String sqlLibro = "INSERT INTO Libro VALUES(?,?,?,?,?,?,?,?,?,?)";
+            String sqlUnion = "INSERT INTO AUTOR_LIBRO VALUES(?,?)";
+
+            List<String> autores = listaAutores.getSelectedValuesList();
+            //Pedir datos para la inserción en ambas tablas
             int numeroSerie = Integer.parseInt(txtNumeroSerieLibro.getText().trim());
             String ISBN = txtISBNLibro.getText().trim();
             String titulo = txtTituloLibro.getText().trim();
             int año = Integer.parseInt(txtAñoLibro.getText().trim());
+            //List<String> autores = listaAutores.getSelectedValuesList();
             int numeroPaginas = Integer.parseInt(txtNumeroPaginasLibro.getText().trim());
             int precio = Integer.parseInt(txtPrecioLibro.getText().trim());
             String editorial = comboEditorial.getSelectedItem().toString();
             String idioma = comboIdioma.getSelectedItem().toString();
             String categoria = comboCategoria.getSelectedItem().toString();
             String estado = comboEstado.getSelectedItem().toString();
-            
+
+            //Busqueda de nombres y rut a partir de los autores elegidos
+            ArrayList nombres = devuelveNombres(autores);
+            ArrayList ruts = devuelveRuts(nombres);
+
+            //Inserción en la tabla Libros
+            ps = con.prepareStatement(sqlLibro);
             ps.setInt(1, numeroSerie);
             ps.setString(2, ISBN);
             ps.setString(3, titulo);
@@ -872,18 +1059,100 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
             ps.setString(8, idioma);
             ps.setString(9, categoria);
             ps.setString(10, estado);
-            int res = ps.executeUpdate();
-            if (res > 0) {
-                JOptionPane.showMessageDialog(null, "Se ha ingresado correctamente el valor a la BD", "Confirmacion", JOptionPane.INFORMATION_MESSAGE);
-                limpiar();
-                listar();
-            }
+            ps.executeUpdate();
 
+            ps = con.prepareStatement(sqlUnion);
+            for (int j = 0; j < ruts.size(); j++) {
+                int numse = numeroSerie;
+                String palabra = (String) ruts.get(j);
+                ps.setInt(1, numse);
+                ps.setString(2, palabra);
+                ps.addBatch();
+            }
+            int res[] = ps.executeBatch();
+            JOptionPane.showMessageDialog(null, "Se ha ingresado correctamente el valor a la base de datos", "Mensaje de Confirmación", JOptionPane.INFORMATION_MESSAGE);
+            limpiar();
+            listar();
+            con.commit();
+        } catch (Exception ex) {
+            int numeroSerie = Integer.parseInt(txtNumeroSerieLibro.getText().trim());
+            String mensaje = "";
+            if (txtNumeroSerieLibro.getText().trim().length() == 0 || numeroSerie == 0  ) {
+                mensaje = mensaje.concat("No se ha ingresado ningún Número de Serie \n");
+            } else if (txtISBNLibro.getText().trim().length() == 0) {
+                mensaje = mensaje.concat("No se ha ingresado ningún ISBN \n");
+            } else if (txtISBNLibro.getText().trim().length() != 13) {
+                mensaje = mensaje.concat("No se ha ingresado un ISBN válido \n");
+            } else if (txtTituloLibro.getText().trim().length() == 0) {
+                mensaje = mensaje.concat("No se ha ingresado ningún Título \n");
+            } else if (txtAñoLibro.getText().trim().length() == 0) {
+                mensaje = mensaje.concat("No se ha ingresado Año de Publicación \n");
+            } else if (txtNumeroPaginasLibro.getText().trim().length() == 0) {
+                mensaje = mensaje.concat("No se ha ingresado Número de Páginas \n");
+            } else {
+
+                try {
+                    con.rollback();
+                } catch (SQLException ex1) {
+                    Logger.getLogger(RegistroLibro.class.getName()).log(Level.SEVERE, null, ex1);
+                }
+            }
+            JOptionPane.showMessageDialog(null, mensaje, "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public ArrayList devuelveNombres(List<String> autores) {
+        ArrayList nombres = new ArrayList();
+        String nombre;
+        String valor;
+        int valorfinal;
+        for (int i = 0; i < autores.size(); i++) {
+            valor = autores.get(i);
+            valorfinal = valor.indexOf(" ");
+            nombre = valor.substring(0, valorfinal);
+            nombres.add(nombre);
+        }
+        return nombres;
+
+    }
+
+    public String devuelveRut(ArrayList nombres) {
+        String devolver = "";
+        int i = 0;
+        String consulta = "SELECT RUT FROM AUTOR WHERE NOMBRE = ?";
+        try {
+            ps = con.prepareStatement(consulta);
+            String palabra = (String) nombres.get(i);
+            ps.setString(1, palabra);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                devolver = rs.getString("RUT");
+            }
         } catch (SQLException ex) {
-            if (txtNumeroSerieLibro.getText().trim().length() == 0 || txtNumeroSerieLibro.getText().trim().equals("")) {
-                JOptionPane.showMessageDialog(null, "No se ingresó Numero de Serie", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return devolver;
+    }
+
+    public ArrayList devuelveRuts(ArrayList nombres) {
+        ArrayList ruts = new ArrayList();
+        int i = 0;
+        String consulta = "SELECT RUT FROM AUTOR WHERE NOMBRE = ?";
+        while (i < nombres.size()) {
+            try {
+                ps = con.prepareStatement(consulta);
+                String palabra = (String) nombres.get(i);
+                ps.setString(1, palabra);
+                rs = ps.executeQuery();
+                while (rs.next()) {
+                    ruts.add(rs.getString("RUT"));
+                }
+                i++;
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
             }
         }
+        return ruts;
     }
 
     @Override
@@ -893,19 +1162,29 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
         filaseleccionada = tablaLibros.getSelectedRow();
         if (filaseleccionada >= 0) {
             try {
+                con.setAutoCommit(false);
                 int seleccionar = JOptionPane.showConfirmDialog(null, "¿Desea Eliminar este Registro?", "Confirmación", JOptionPane.YES_NO_OPTION);
                 if (seleccionar == 0) {
-                    String sql = "DELETE FROM Libro WHERE NUMERO_DE_SERIE = ?";
+                    String sqlLibro = "DELETE FROM Libro WHERE NUMERO_DE_SERIE = ?";
+                    String sqlUnion = "DELETE FROM AUTOR_LIBRO WHERE LIBRO_NUMERO_DE_SERIE = ?";
                     String valor = tablaLibros.getValueAt(filaseleccionada, 0).toString();
-                    ps = con.prepareStatement(sql);
+                    ps = con.prepareStatement(sqlLibro);
                     ps.setString(1, valor);
-                    int res = ps.executeUpdate();
-                    if (res > 0) {
-                        JOptionPane.showMessageDialog(null, "Se ha Eliminado Correctamente el registro", "Mensaje de Eliminación", JOptionPane.INFORMATION_MESSAGE);
-                        listar();
-                    }
+                    ps.addBatch();
+                    
+                    ps = con.prepareStatement(sqlUnion);
+                    ps.setString(1, valor);
+                    ps.addBatch();
+                    
+                    ps.executeBatch();
+                    
+                    con.commit();
+                    JOptionPane.showMessageDialog(null,"Se ha eliminado el registro de la tabla ", "Ventana", JOptionPane.INFORMATION_MESSAGE);
+                    listar();
+                    limpiar();
                 }
             } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Ventana", JOptionPane.ERROR_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguna fila para eliminar", "Ventana", JOptionPane.ERROR_MESSAGE);
@@ -916,18 +1195,24 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
     public void listar() {
         DefaultTableModel modelo = new DefaultTableModel();
         try {
-            String sql = "SELECT * FROM Libro";
+            String sql = "SELECT li.NUMERO_DE_SERIE, li.ISBN, li.TITULO, li.\"AÑO_PUBLICACIÓN\", au.NOMBRE ||' ' || au.APELLIDO_PATERNO||' ' || au.APELLIDO_MATERNO AS \"NOMBRE COMPLETO\", li.\"NUMERO_DE_PÁGINAS\",li.PRECIO_REFERENCIA,li.EDITORIAL_NOMBRE,li.IDIOMA_IDIOMA,li.CATEGORIA_TIPO,li.REGISTRO_ESTADO\n"
+                    + "from LIBRO li\n"
+                    + "JOIN AUTOR_LIBRO auli\n"
+                    + "on li.NUMERO_DE_SERIE = auli.LIBRO_NUMERO_DE_SERIE\n"
+                    + "JOIN AUTOR au\n"
+                    + "on auli.AUTOR_RUT = au.RUT";
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             ResultSetMetaData rsmd = rs.getMetaData();
             int cantColumnas = rsmd.getColumnCount();
-            modelo.addColumn("Número de Serie");
+            modelo.addColumn("N° Serie");
             modelo.addColumn("ISBN");
             modelo.addColumn("Título");
-            modelo.addColumn("Año de Publicación");
-            modelo.addColumn("Número Páginas");
+            modelo.addColumn("Año");
+            modelo.addColumn("Autores");
+            modelo.addColumn("Páginas");
             modelo.addColumn("Precio");
-            modelo.addColumn("Nombre Editorial");
+            modelo.addColumn("Editorial");
             modelo.addColumn("Idioma");
             modelo.addColumn("Categoria");
             modelo.addColumn("Estado");
@@ -949,23 +1234,30 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
     public void buscarPor() {
         DefaultTableModel modelo = new DefaultTableModel();
         try {
-            String datoCombo = (String) comboLibro.getSelectedItem();
+            String datoCombo = "li.".concat((String) comboLibro.getSelectedItem());
             String buscar = txtBusqueda.getText().trim();
             if (buscar.equals("")) {
                 listar();
             } else {
-                String sql = "SELECT * FROM Libro WHERE UPPER(" + datoCombo + ")  like UPPER('%" + buscar + "%') ";
+                String sql = "SELECT li.NUMERO_DE_SERIE, li.ISBN, li.TITULO, li.\"AÑO_PUBLICACIÓN\", au.NOMBRE ||' ' || au.APELLIDO_PATERNO||' ' || au.APELLIDO_MATERNO AS \"NOMBRE COMPLETO\", li.\"NUMERO_DE_PÁGINAS\",li.PRECIO_REFERENCIA,li.EDITORIAL_NOMBRE,li.IDIOMA_IDIOMA,li.CATEGORIA_TIPO,li.REGISTRO_ESTADO\n"
+                        + "from LIBRO li\n"
+                        + "JOIN AUTOR_LIBRO auli\n"
+                        + "on li.NUMERO_DE_SERIE = auli.LIBRO_NUMERO_DE_SERIE\n"
+                        + "JOIN AUTOR au\n"
+                        + "on auli.AUTOR_RUT = au.RUT\n"
+                        + "WHERE " + datoCombo + " like '%" + buscar + "%' ";
                 ps = con.prepareStatement(sql);
                 rs = ps.executeQuery();
                 ResultSetMetaData rsmd = rs.getMetaData();
                 int cantColumnas = rsmd.getColumnCount();
-                modelo.addColumn("Número de Serie");
+                modelo.addColumn("N° Serie");
                 modelo.addColumn("ISBN");
                 modelo.addColumn("Título");
-                modelo.addColumn("Año de Publicación");
-                modelo.addColumn("Número Páginas");
+                modelo.addColumn("Año");
+                modelo.addColumn("Autores");
+                modelo.addColumn("Páginas");
                 modelo.addColumn("Precio");
-                modelo.addColumn("Nombre Editorial");
+                modelo.addColumn("Editorial");
                 modelo.addColumn("Idioma");
                 modelo.addColumn("Categoria");
                 modelo.addColumn("Estado");
@@ -977,10 +1269,12 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
                     modelo.addRow(filas);
                 }
                 tablaLibros.setModel(modelo);
+
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(RegistroLibro.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RegistroLibro.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 

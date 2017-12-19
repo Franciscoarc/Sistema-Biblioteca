@@ -40,9 +40,9 @@ public class DetalleCompra extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         btnVolverSeleccion = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnCrearFactura = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaLibros = new javax.swing.JTable();
         lblMetodoPago = new javax.swing.JLabel();
         comboMetodoPago = new javax.swing.JComboBox<>();
         lblDistribuidor = new javax.swing.JLabel();
@@ -99,20 +99,31 @@ public class DetalleCompra extends javax.swing.JFrame {
         jPanel1.add(btnVolverSeleccion);
         btnVolverSeleccion.setBounds(30, 440, 160, 40);
 
-        jButton1.setText("Crear Factura");
-        jPanel1.add(jButton1);
-        jButton1.setBounds(600, 440, 170, 40);
+        btnCrearFactura.setText("Crear Factura");
+        btnCrearFactura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearFacturaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnCrearFactura);
+        btnCrearFactura.setBounds(600, 440, 170, 40);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaLibros = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndex){
+                return false;
+            }
+        };
+        tablaLibros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "T1", "T2", "t3", "t4"
+
             }
         ));
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(jTable1);
+        tablaLibros.setSelectionBackground(new java.awt.Color(0, 204, 255));
+        tablaLibros.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tablaLibros);
 
         jPanel1.add(jScrollPane1);
         jScrollPane1.setBounds(30, 140, 740, 130);
@@ -419,6 +430,10 @@ public class DetalleCompra extends javax.swing.JFrame {
         registroTrabajador.setResizable(false);
     }//GEN-LAST:event_RegistrarTrabajadorActionPerformed
 
+    private void btnCrearFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearFacturaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCrearFacturaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -478,9 +493,9 @@ public class DetalleCompra extends javax.swing.JFrame {
     private javax.swing.JMenuItem RegistrarMetodoPago;
     private javax.swing.JMenuItem RegistrarTelefono;
     private javax.swing.JMenuItem RegistrarTrabajador;
+    private javax.swing.JButton btnCrearFactura;
     private javax.swing.JButton btnVolverSeleccion;
     private javax.swing.JComboBox<String> comboMetodoPago;
-    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -491,12 +506,12 @@ public class DetalleCompra extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel lblDistribuidor;
     private javax.swing.JLabel lblMetodoPago;
     private javax.swing.JLabel lblPrecioConIVA;
     private javax.swing.JLabel lblPrecioNeto;
+    public static javax.swing.JTable tablaLibros;
     private javax.swing.JTextField txtCostodelIVA;
     private javax.swing.JTextField txtFechaCompra;
     private javax.swing.JTextField txtPrecioConIVA;

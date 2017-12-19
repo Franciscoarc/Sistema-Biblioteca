@@ -624,7 +624,7 @@ public class RegistroAutor extends javax.swing.JFrame implements CRUD {
             String nombre = txtNombreAutor.getText().trim();
             String ApellidoP = txtApellidoPAutor.getText().trim();
             String ApellidoM = txtApellidoPAutor.getText().trim();
-            String sql = "UPDATE Autor SET RUT='"+rut+"' NOMBRE='" + nombre + "', APELLIDO_PATERNO='" + ApellidoP + "', APELLIDO_MATERNO='" + ApellidoM + "' WHERE RUT ='" + modificar + "'";
+            String sql = "UPDATE Autor SET RUT='" + rut + "', NOMBRE='" + nombre + "', APELLIDO_PATERNO='" + ApellidoP + "', APELLIDO_MATERNO='" + ApellidoM + "' WHERE RUT ='" + modificar + "'";
             ps = con.prepareStatement(sql);
             int res = ps.executeUpdate();
             if (res > 0) {
@@ -633,7 +633,24 @@ public class RegistroAutor extends javax.swing.JFrame implements CRUD {
                 JOptionPane.showMessageDialog(null, "Se ha modificar satisfactoriamente su registro", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Ya existe el nombre en nuestra Base de datos", "Confirmación", JOptionPane.ERROR_MESSAGE);
+            String rut = txtRutAutor.getText().trim();
+            int largo = rut.length();
+            String verifica = rut.substring(largo - 1);
+            String punto = Character.toString(rut.charAt(0));
+            if (txtRutAutor.getText().trim().equals(".   .   -")) {
+                JOptionPane.showMessageDialog(null, "No se ingresó RUT", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
+            } else if (verifica.equals("-") || punto.equals(".")) {
+                JOptionPane.showMessageDialog(null, "RUT mal formado", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
+            } else if (txtNombreAutor.getText().trim().length() == 0 || txtNombreAutor.getText().trim().equals("")) {
+                JOptionPane.showMessageDialog(null, "No se ingresó Nombre", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
+            } else if (txtApellidoPAutor.getText().trim().length() == 0 || txtApellidoPAutor.getText().trim().equals("")) {
+
+                JOptionPane.showMessageDialog(null, "No se ingresó el Apellido Paterno", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
+            } else if (txtApellidoMAutor.getText().trim().length() == 0 || txtApellidoMAutor.getText().trim().equals("")) {
+                JOptionPane.showMessageDialog(null, "No se ingresó el Apellido Materno", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "No se ha ingresado correctamente a la BD, ya está ese nombre en uso", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
@@ -657,10 +674,14 @@ public class RegistroAutor extends javax.swing.JFrame implements CRUD {
         try {
             String sql = "INSERT INTO Autor VALUES(?,?,?,?)";
             ps = con.prepareStatement(sql);
-            ps.setString(1, txtRutAutor.getText().trim());
-            ps.setString(2, txtNombreAutor.getText().trim());
-            ps.setString(3, txtApellidoPAutor.getText().trim());
-            ps.setString(4, txtApellidoMAutor.getText().trim());
+            String rut = txtRutAutor.getText().trim();
+            String nombre = txtNombreAutor.getText().trim();
+            String ApellidoP = txtApellidoPAutor.getText().trim();
+            String ApellidoM = txtApellidoMAutor.getText().trim();
+            ps.setString(1, rut);
+            ps.setString(2, nombre);
+            ps.setString(3, ApellidoP);
+            ps.setString(4, ApellidoM);
             int res = ps.executeUpdate();
             if (res > 0) {
                 JOptionPane.showMessageDialog(null, "Se ha ingresado correctamente el valor a la BD", "Confirmacion", JOptionPane.INFORMATION_MESSAGE);
@@ -669,10 +690,15 @@ public class RegistroAutor extends javax.swing.JFrame implements CRUD {
             }
 
         } catch (SQLException ex) {
-            if(txtRutAutor.getText().trim().length() == 0 || txtRutAutor.getText().trim().equals("")){
+            String rut = txtRutAutor.getText().trim();
+            int largo = rut.length();
+            String verifica = rut.substring(largo - 1);
+            String punto = Character.toString(rut.charAt(0));
+            if (txtRutAutor.getText().trim().equals(".   .   -")) {
                 JOptionPane.showMessageDialog(null, "No se ingresó RUT", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
-            }
-            else if (txtNombreAutor.getText().trim().length() == 0 || txtNombreAutor.getText().trim().equals("")) {
+            } else if (verifica.equals("-") || punto.equals(".")) {
+                JOptionPane.showMessageDialog(null, "RUT mal formado", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
+            } else if (txtNombreAutor.getText().trim().length() == 0 || txtNombreAutor.getText().trim().equals("")) {
                 JOptionPane.showMessageDialog(null, "No se ingresó Nombre", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
             } else if (txtApellidoPAutor.getText().trim().length() == 0 || txtApellidoPAutor.getText().trim().equals("")) {
 
