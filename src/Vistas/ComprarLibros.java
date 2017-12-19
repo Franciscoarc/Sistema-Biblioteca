@@ -9,7 +9,6 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 public class ComprarLibros extends javax.swing.JFrame {
 
@@ -18,7 +17,6 @@ public class ComprarLibros extends javax.swing.JFrame {
     PreparedStatement ps;
     ResultSet rs;
     DefaultTableModel modelo = new DefaultTableModel();
-    DetalleCompra crearFactura = new DetalleCompra();
 
     public ComprarLibros() {
 
@@ -328,6 +326,7 @@ public class ComprarLibros extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVerFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerFacturaActionPerformed
+        DetalleCompra crearFactura = new DetalleCompra();
         crearFactura.setVisible(true);
         crearFactura.setResizable(false);
 
@@ -522,8 +521,8 @@ public class ComprarLibros extends javax.swing.JFrame {
     public void añadirLibro() {
         int filaSeleccionada = tablaLibrosDisponibles.getSelectedRow();
         if (filaSeleccionada >= 0) {
-            int fila = tablaLibrosDisponibles.getRowCount();
             int columnas = tablaLibrosDisponibles.getColumnCount();
+            int fila = tablaLibrosDisponibles.getRowCount();
             Object[] filas = new Object[columnas];
             for (int i = 0; i < filas.length; i++) {
                 filas[i] = tablaLibrosDisponibles.getValueAt(filaSeleccionada, i);
