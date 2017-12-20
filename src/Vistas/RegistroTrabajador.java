@@ -298,11 +298,11 @@ public class RegistroTrabajador extends javax.swing.JFrame implements CRUD {
         });
         PanelPrincipal.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 290, 100, -1));
 
-        fechaContratacion.setMaxSelectableDate(new java.util.Date(253370779295000L));
-        fechaContratacion.setMinSelectableDate(new java.util.Date(-62135751505000L));
+        fechaContratacion.setMaxSelectableDate(new java.util.Date(4102459295000L));
+        fechaContratacion.setMinSelectableDate(new java.util.Date(-2208971774000L));
         PanelPrincipal.add(fechaContratacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 140, 160, -1));
 
-        Fondo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo.jpg"))); // NOI18N
+        Fondo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Fondo.jpg"))); // NOI18N
         PanelPrincipal.add(Fondo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 500));
 
         MenuAutor.setText("Autor");

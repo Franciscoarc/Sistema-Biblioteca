@@ -12,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -21,16 +20,19 @@ import javax.swing.table.DefaultTableModel;
  */
 public class DetalleCompra extends javax.swing.JFrame {
 
+    public static final double IVA = 0.19;
+    public static final String VALORIVA = "19%";
     Conexion conexion = new Conexion();
     Connection con = conexion.conectar();
     PreparedStatement ps;
     ResultSet rs;
-    public Object[][] filas;
+    DefaultTableModel modelo = new DefaultTableModel();
 
     public DetalleCompra() {
         initComponents();
         llenarComboDistribuidor();
         llenarComboPago();
+        llenarTabla();
 
     }
 
@@ -123,9 +125,11 @@ public class DetalleCompra extends javax.swing.JFrame {
 
             }
         ));
+        tablaLibros.setColumnSelectionAllowed(true);
         tablaLibros.setSelectionBackground(new java.awt.Color(0, 204, 255));
         tablaLibros.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaLibros);
+        tablaLibros.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
         jPanel1.add(jScrollPane1);
         jScrollPane1.setBounds(30, 140, 740, 130);
@@ -211,7 +215,7 @@ public class DetalleCompra extends javax.swing.JFrame {
         jPanel1.add(jTextField2);
         jTextField2.setBounds(610, 350, 140, 20);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo.jpg"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Fondo.jpg"))); // NOI18N
         jPanel1.add(jLabel1);
         jLabel1.setBounds(0, 0, 800, 500);
 
@@ -342,7 +346,9 @@ public class DetalleCompra extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearFacturaActionPerformed
-        // TODO add your handling code here:
+        CrearFactura crearFactura = new CrearFactura();
+        crearFactura.setVisible(true);
+        crearFactura.setResizable(false);
     }//GEN-LAST:event_btnCrearFacturaActionPerformed
 
     private void btnVolverSeleccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverSeleccionActionPerformed
@@ -491,7 +497,7 @@ public class DetalleCompra extends javax.swing.JFrame {
     private javax.swing.JLabel lblMetodoPago;
     private javax.swing.JLabel lblPrecioConIVA;
     private javax.swing.JLabel lblPrecioNeto;
-    public static javax.swing.JTable tablaLibros;
+    public javax.swing.JTable tablaLibros;
     private javax.swing.JTextField txtCostodelIVA;
     private javax.swing.JTextField txtFechaCompra;
     private javax.swing.JTextField txtPrecioConIVA;
@@ -524,22 +530,11 @@ public class DetalleCompra extends javax.swing.JFrame {
         }
     }
 
-    public Object[][] llenarTablaLibrosComprados() {
-
+    public void llenarTabla() {
+        
+        
         int fila = tablaLibros.getRowCount();
-        int columna = tablaLibros.getColumnCount();
-        filas = new Object[fila][columna];
-        for (int i = 0; i < fila; i++) {
-            for (int j = 0; j < columna; j++) {
-                filas[i][j] = tablaLibros.getValueAt(i, j);
-            }
-        }
-        for (int i = 0; i < fila; i++) {
-            for (int j = 0; j < columna; j++) {
-                System.out.print(filas[i][j]+ " ");
-            }
-            System.out.println();
-        }
-        return filas;
+        int columnas = tablaLibros.getColumnCount();
+        String sql = "123";
     }
 }

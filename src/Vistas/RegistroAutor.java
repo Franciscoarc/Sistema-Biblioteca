@@ -7,6 +7,7 @@ package Vistas;
 
 import ConexionBD.Conexion;
 import DAO.CRUD;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -62,12 +63,12 @@ public class RegistroAutor extends javax.swing.JFrame implements CRUD {
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaAutor = new javax.swing.JTable();
         btnBuscar = new javax.swing.JButton();
-        txtNombreAutor = new javax.swing.JFormattedTextField();
-        txtApellidoPAutor = new javax.swing.JFormattedTextField();
-        txtApellidoMAutor = new javax.swing.JFormattedTextField();
         comboAutor = new javax.swing.JComboBox<>();
         lblRUT = new javax.swing.JLabel();
         txtRutAutor = new javax.swing.JFormattedTextField();
+        txtNombreAutor = new javax.swing.JTextField();
+        txtApellidoPAutor = new javax.swing.JTextField();
+        txtApellidoMAutor = new javax.swing.JTextField();
         Fondo = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         MenuAutor = new javax.swing.JMenu();
@@ -222,30 +223,6 @@ public class RegistroAutor extends javax.swing.JFrame implements CRUD {
         });
         PanelPrincipal.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 280, -1, -1));
 
-        try {
-            txtNombreAutor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("????????????????????")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        txtNombreAutor.setFocusLostBehavior(javax.swing.JFormattedTextField.PERSIST);
-        PanelPrincipal.add(txtNombreAutor, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 100, 150, -1));
-
-        try {
-            txtApellidoPAutor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("??????????????????????")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        txtApellidoPAutor.setFocusLostBehavior(javax.swing.JFormattedTextField.PERSIST);
-        PanelPrincipal.add(txtApellidoPAutor, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, 170, -1));
-
-        try {
-            txtApellidoMAutor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("?????????????????????")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        txtApellidoMAutor.setFocusLostBehavior(javax.swing.JFormattedTextField.PERSIST);
-        PanelPrincipal.add(txtApellidoMAutor, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 150, 150, -1));
-
         comboAutor.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         comboAutor.setAutoscrolls(true);
         PanelPrincipal.add(comboAutor, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 280, 120, -1));
@@ -261,8 +238,30 @@ public class RegistroAutor extends javax.swing.JFrame implements CRUD {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        txtRutAutor.setText(".   .   - ");
         txtRutAutor.setFocusLostBehavior(javax.swing.JFormattedTextField.PERSIST);
         PanelPrincipal.add(txtRutAutor, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 100, 170, -1));
+
+        txtNombreAutor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreAutorKeyTyped(evt);
+            }
+        });
+        PanelPrincipal.add(txtNombreAutor, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 100, 150, -1));
+
+        txtApellidoPAutor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApellidoPAutorKeyTyped(evt);
+            }
+        });
+        PanelPrincipal.add(txtApellidoPAutor, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, 170, -1));
+
+        txtApellidoMAutor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApellidoMAutorKeyTyped(evt);
+            }
+        });
+        PanelPrincipal.add(txtApellidoMAutor, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 150, 150, -1));
 
         Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Fondo.jpg"))); // NOI18N
         PanelPrincipal.add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 470));
@@ -480,6 +479,18 @@ public class RegistroAutor extends javax.swing.JFrame implements CRUD {
         this.dispose();
     }//GEN-LAST:event_RegistrarTrabajadorActionPerformed
 
+    private void txtNombreAutorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreAutorKeyTyped
+        validarLetras(evt);
+    }//GEN-LAST:event_txtNombreAutorKeyTyped
+
+    private void txtApellidoPAutorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoPAutorKeyTyped
+        validarLetras(evt);
+    }//GEN-LAST:event_txtApellidoPAutorKeyTyped
+
+    private void txtApellidoMAutorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoMAutorKeyTyped
+        validarLetras(evt);
+    }//GEN-LAST:event_txtApellidoMAutorKeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -558,13 +569,19 @@ public class RegistroAutor extends javax.swing.JFrame implements CRUD {
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblRUT;
     private javax.swing.JTable tablaAutor;
-    private javax.swing.JFormattedTextField txtApellidoMAutor;
-    private javax.swing.JFormattedTextField txtApellidoPAutor;
+    private javax.swing.JTextField txtApellidoMAutor;
+    private javax.swing.JTextField txtApellidoPAutor;
     private javax.swing.JTextField txtBusqueda;
-    private javax.swing.JFormattedTextField txtNombreAutor;
+    private javax.swing.JTextField txtNombreAutor;
     private javax.swing.JFormattedTextField txtRutAutor;
     // End of variables declaration//GEN-END:variables
 
+    public void validarLetras(KeyEvent evt){
+        char letraespacio = evt.getKeyChar();
+        if(!Character.isLetter(letraespacio) && letraespacio != KeyEvent.VK_SPACE){
+            evt.consume();
+        }
+    }
     @Override
     public void limpiar() {
         txtRutAutor.setText("");
@@ -580,7 +597,7 @@ public class RegistroAutor extends javax.swing.JFrame implements CRUD {
             String rut = txtRutAutor.getText().trim();
             String nombre = txtNombreAutor.getText().trim();
             String ApellidoP = txtApellidoPAutor.getText().trim();
-            String ApellidoM = txtApellidoPAutor.getText().trim();
+            String ApellidoM = txtApellidoMAutor.getText().trim();
             String sql = "UPDATE Autor SET RUT='" + rut + "', NOMBRE='" + nombre + "', APELLIDO_PATERNO='" + ApellidoP + "', APELLIDO_MATERNO='" + ApellidoM + "' WHERE RUT ='" + modificar + "'";
             ps = con.prepareStatement(sql);
             int res = ps.executeUpdate();
@@ -649,11 +666,11 @@ public class RegistroAutor extends javax.swing.JFrame implements CRUD {
         } catch (SQLException ex) {
             String rut = txtRutAutor.getText().trim();
             int largo = rut.length();
-            String verifica = rut.substring(largo - 1);
+            String verifica = rut.substring(largo);
             String punto = Character.toString(rut.charAt(0));
             if (txtRutAutor.getText().trim().equals(".   .   -")) {
                 JOptionPane.showMessageDialog(null, "No se ingresó RUT", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
-            } else if (verifica.equals("-") || punto.equals(".")) {
+            } else if (verifica.equals("-") || punto.equals(".") || rut.length() <=10) {
                 JOptionPane.showMessageDialog(null, "RUT mal formado", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
             } else if (txtNombreAutor.getText().trim().length() == 0 || txtNombreAutor.getText().trim().equals("")) {
                 JOptionPane.showMessageDialog(null, "No se ingresó Nombre", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);

@@ -808,6 +808,7 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
     @Override
     public void limpiar() {
         txtNumeroSerieLibro.setText("");
+        txtNumeroSerieLibro.setEnabled(true);
         txtISBNLibro.setText("");
         txtTituloLibro.setText("");
         txtAñoLibro.setText("");
@@ -1045,9 +1046,9 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
             }
             int res[] = ps.executeBatch();
             con.commit();
+            limpiar();
             listar();
             JOptionPane.showMessageDialog(null, "Se ha ingresado correctamente el valor a la base de datos", "Mensaje de Confirmación", JOptionPane.INFORMATION_MESSAGE);
-            limpiar();
         } catch (HeadlessException | SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
             String mensaje = "";
@@ -1251,8 +1252,7 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(RegistroLibro.class
-                    .getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RegistroLibro.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

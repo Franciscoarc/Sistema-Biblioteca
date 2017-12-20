@@ -254,7 +254,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnDevolverLibroActionPerformed
 
     private void BtnArrendarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnArrendarLibroActionPerformed
-        // TODO add your handling code here:
+        Prestamos prestamos = new  Prestamos();
+        prestamos.setVisible(true);
+        prestamos.setResizable(false);
     }//GEN-LAST:event_BtnArrendarLibroActionPerformed
 
     private void BtnComprarLibros2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnComprarLibros2ActionPerformed
