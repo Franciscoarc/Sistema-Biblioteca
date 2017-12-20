@@ -5,8 +5,15 @@
  */
 package Vistas;
 
-
-
+import ConexionBD.Conexion;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -14,11 +21,18 @@ package Vistas;
  */
 public class DetalleCompra extends javax.swing.JFrame {
 
-    ComprarLibros comprarLibros = new ComprarLibros();
+    Conexion conexion = new Conexion();
+    Connection con = conexion.conectar();
+    PreparedStatement ps;
+    ResultSet rs;
+    public Object[][] filas;
+
     public DetalleCompra() {
         initComponents();
-    }
+        llenarComboDistribuidor();
+        llenarComboPago();
 
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -51,8 +65,6 @@ public class DetalleCompra extends javax.swing.JFrame {
         RegistrarAutor = new javax.swing.JMenuItem();
         MenuCategoria = new javax.swing.JMenu();
         RegistrarCategoria = new javax.swing.JMenuItem();
-        MenuDireccion = new javax.swing.JMenu();
-        RegistrarDireccion = new javax.swing.JMenuItem();
         MenuDistribuidor = new javax.swing.JMenu();
         RegistrarDistribuidor = new javax.swing.JMenuItem();
         MenuEditorial = new javax.swing.JMenu();
@@ -65,8 +77,6 @@ public class DetalleCompra extends javax.swing.JFrame {
         RegistrarMetodoPago = new javax.swing.JMenuItem();
         MenuEstados = new javax.swing.JMenu();
         RegistrarEstadoLibro = new javax.swing.JMenuItem();
-        MenuTelefono = new javax.swing.JMenu();
-        RegistrarTelefono = new javax.swing.JMenuItem();
         MenuTrabajador = new javax.swing.JMenu();
         RegistrarTrabajador = new javax.swing.JMenuItem();
 
@@ -153,6 +163,7 @@ public class DetalleCompra extends javax.swing.JFrame {
         jPanel1.add(lblPrecioNeto);
         lblPrecioNeto.setBounds(80, 300, 80, 20);
 
+        txtPrecioNeto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtPrecioNeto.setEnabled(false);
         jPanel1.add(txtPrecioNeto);
         txtPrecioNeto.setBounds(180, 300, 110, 20);
@@ -228,18 +239,6 @@ public class DetalleCompra extends javax.swing.JFrame {
 
         jMenuBar1.add(MenuCategoria);
 
-        MenuDireccion.setText("Direccion");
-
-        RegistrarDireccion.setText("Registrar");
-        RegistrarDireccion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RegistrarDireccionActionPerformed(evt);
-            }
-        });
-        MenuDireccion.add(RegistrarDireccion);
-
-        jMenuBar1.add(MenuDireccion);
-
         MenuDistribuidor.setText("Distribuidor");
 
         RegistrarDistribuidor.setText("Registrar");
@@ -300,7 +299,7 @@ public class DetalleCompra extends javax.swing.JFrame {
 
         jMenuBar1.add(MenuMetodosPago);
 
-        MenuEstados.setText("Estados");
+        MenuEstados.setText("Estado Libros");
 
         RegistrarEstadoLibro.setText("Registrar");
         RegistrarEstadoLibro.addActionListener(new java.awt.event.ActionListener() {
@@ -311,18 +310,6 @@ public class DetalleCompra extends javax.swing.JFrame {
         MenuEstados.add(RegistrarEstadoLibro);
 
         jMenuBar1.add(MenuEstados);
-
-        MenuTelefono.setText("Telefono");
-
-        RegistrarTelefono.setText("Registrar");
-        RegistrarTelefono.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RegistrarTelefonoActionPerformed(evt);
-            }
-        });
-        MenuTelefono.add(RegistrarTelefono);
-
-        jMenuBar1.add(MenuTelefono);
 
         MenuTrabajador.setText("Trabajador");
 
@@ -354,82 +341,82 @@ public class DetalleCompra extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCrearFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearFacturaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCrearFacturaActionPerformed
+
+    private void btnVolverSeleccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverSeleccionActionPerformed
+        ComprarLibros comprarLibros = new ComprarLibros();
+        comprarLibros.modelo = (DefaultTableModel) tablaLibros.getModel();
+        comprarLibros.tablaLibrosSeleccionados.setModel(comprarLibros.modelo);
+        comprarLibros.setVisible(true);
+        comprarLibros.setResizable(false);
+        this.dispose();
+
+    }//GEN-LAST:event_btnVolverSeleccionActionPerformed
+
     private void RegistrarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarAutorActionPerformed
         RegistroAutor registroAutor = new RegistroAutor();
         registroAutor.setVisible(true);
         registroAutor.setResizable(false);
+        this.dispose();
     }//GEN-LAST:event_RegistrarAutorActionPerformed
 
     private void RegistrarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarCategoriaActionPerformed
         RegistroCategoria registroCategoria = new RegistroCategoria();
         registroCategoria.setVisible(true);
         registroCategoria.setResizable(false);
+        this.dispose();
     }//GEN-LAST:event_RegistrarCategoriaActionPerformed
-
-    private void RegistrarDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarDireccionActionPerformed
-        RegistroDireccion registroDireccion = new RegistroDireccion();
-        registroDireccion.setVisible(true);
-        registroDireccion.setResizable(false);
-    }//GEN-LAST:event_RegistrarDireccionActionPerformed
 
     private void RegistrarDistribuidorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarDistribuidorActionPerformed
         RegistroDistribuidor registroDistribuidor = new RegistroDistribuidor();
         registroDistribuidor.setVisible(true);
         registroDistribuidor.setResizable(false);
+        this.dispose();
     }//GEN-LAST:event_RegistrarDistribuidorActionPerformed
 
     private void RegistrarEditorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarEditorialActionPerformed
         RegistroEditorial registroEditorial = new RegistroEditorial();
         registroEditorial.setVisible(true);
         registroEditorial.setResizable(false);
+        this.dispose();
     }//GEN-LAST:event_RegistrarEditorialActionPerformed
 
     private void RegistrarIdiomaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarIdiomaActionPerformed
         RegistroIdioma registroIdioma = new RegistroIdioma();
         registroIdioma.setVisible(true);
         registroIdioma.setResizable(false);
+        this.dispose();
     }//GEN-LAST:event_RegistrarIdiomaActionPerformed
 
     private void RegistrarLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarLibrosActionPerformed
         RegistroLibro registroLibro = new RegistroLibro();
         registroLibro.setVisible(true);
         registroLibro.setResizable(false);
+        this.dispose();
     }//GEN-LAST:event_RegistrarLibrosActionPerformed
 
     private void RegistrarMetodoPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarMetodoPagoActionPerformed
         RegistroMetodoPago metodoPago = new RegistroMetodoPago();
         metodoPago.setVisible(true);
         metodoPago.setResizable(false);
+        this.dispose();
     }//GEN-LAST:event_RegistrarMetodoPagoActionPerformed
 
     private void RegistrarEstadoLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarEstadoLibroActionPerformed
         RegistroEstadoLibro registroEstadoLibro = new RegistroEstadoLibro();
         registroEstadoLibro.setVisible(true);
         registroEstadoLibro.setResizable(false);
+        this.dispose();
     }//GEN-LAST:event_RegistrarEstadoLibroActionPerformed
-
-    private void RegistrarTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarTelefonoActionPerformed
-        RegistroTelefono registroTelefono = new RegistroTelefono();
-        registroTelefono.setVisible(true);
-        registroTelefono.setResizable(false);
-    }//GEN-LAST:event_RegistrarTelefonoActionPerformed
 
     private void RegistrarTrabajadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarTrabajadorActionPerformed
         RegistroTrabajador registroTrabajador = new RegistroTrabajador();
         registroTrabajador.setVisible(true);
         registroTrabajador.setResizable(false);
+        this.dispose();
     }//GEN-LAST:event_RegistrarTrabajadorActionPerformed
-
-    private void btnCrearFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearFacturaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCrearFacturaActionPerformed
-
-    private void btnVolverSeleccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverSeleccionActionPerformed
-
-        comprarLibros.setVisible(true);
-        comprarLibros.setResizable(false);
-        
-    }//GEN-LAST:event_btnVolverSeleccionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -470,29 +457,25 @@ public class DetalleCompra extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu MenuAutor;
     private javax.swing.JMenu MenuCategoria;
-    private javax.swing.JMenu MenuDireccion;
     private javax.swing.JMenu MenuDistribuidor;
     private javax.swing.JMenu MenuEditorial;
     private javax.swing.JMenu MenuEstados;
     private javax.swing.JMenu MenuIdioma;
     private javax.swing.JMenu MenuLibros;
     private javax.swing.JMenu MenuMetodosPago;
-    private javax.swing.JMenu MenuTelefono;
     private javax.swing.JMenu MenuTrabajador;
     private javax.swing.JMenuItem RegistrarAutor;
     private javax.swing.JMenuItem RegistrarCategoria;
-    private javax.swing.JMenuItem RegistrarDireccion;
     private javax.swing.JMenuItem RegistrarDistribuidor;
     private javax.swing.JMenuItem RegistrarEditorial;
     private javax.swing.JMenuItem RegistrarEstadoLibro;
     private javax.swing.JMenuItem RegistrarIdioma;
     private javax.swing.JMenuItem RegistrarLibros;
     private javax.swing.JMenuItem RegistrarMetodoPago;
-    private javax.swing.JMenuItem RegistrarTelefono;
     private javax.swing.JMenuItem RegistrarTrabajador;
     private javax.swing.JButton btnCrearFactura;
     private javax.swing.JButton btnVolverSeleccion;
-    private javax.swing.JComboBox<String> comboDistribuidor;
+    public static javax.swing.JComboBox<String> comboDistribuidor;
     private javax.swing.JComboBox<String> comboPago;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -514,4 +497,49 @@ public class DetalleCompra extends javax.swing.JFrame {
     private javax.swing.JTextField txtPrecioConIVA;
     private javax.swing.JTextField txtPrecioNeto;
     // End of variables declaration//GEN-END:variables
+
+    public void llenarComboDistribuidor() {
+        try {
+            String sql = "SELECT * FROM Distribuidor";
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                comboDistribuidor.addItem(rs.getString("NOMBRE"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RegistroAutor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void llenarComboPago() {
+        try {
+            String sql = "SELECT * FROM Pago";
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                comboPago.addItem(rs.getString("METODO"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RegistroAutor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public Object[][] llenarTablaLibrosComprados() {
+
+        int fila = tablaLibros.getRowCount();
+        int columna = tablaLibros.getColumnCount();
+        filas = new Object[fila][columna];
+        for (int i = 0; i < fila; i++) {
+            for (int j = 0; j < columna; j++) {
+                filas[i][j] = tablaLibros.getValueAt(i, j);
+            }
+        }
+        for (int i = 0; i < fila; i++) {
+            for (int j = 0; j < columna; j++) {
+                System.out.print(filas[i][j]+ " ");
+            }
+            System.out.println();
+        }
+        return filas;
+    }
 }

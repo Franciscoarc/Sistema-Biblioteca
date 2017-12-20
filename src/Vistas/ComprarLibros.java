@@ -16,7 +16,8 @@ public class ComprarLibros extends javax.swing.JFrame {
     Connection con = conexion.conectar();
     PreparedStatement ps;
     ResultSet rs;
-    DefaultTableModel modelo = new DefaultTableModel();
+    public DefaultTableModel modelo = new DefaultTableModel();
+    public Object[][] datos;
 
     public ComprarLibros() {
 
@@ -56,8 +57,6 @@ public class ComprarLibros extends javax.swing.JFrame {
         RegistrarAutor = new javax.swing.JMenuItem();
         MenuCategoria = new javax.swing.JMenu();
         RegistrarCategoria = new javax.swing.JMenuItem();
-        MenuDireccion = new javax.swing.JMenu();
-        RegistrarDireccion = new javax.swing.JMenuItem();
         MenuDistribuidor = new javax.swing.JMenu();
         RegistrarDistribuidor = new javax.swing.JMenuItem();
         MenuEditorial = new javax.swing.JMenu();
@@ -70,8 +69,6 @@ public class ComprarLibros extends javax.swing.JFrame {
         RegistrarMetodoPago = new javax.swing.JMenuItem();
         MenuEstados = new javax.swing.JMenu();
         RegistrarEstadoLibro = new javax.swing.JMenuItem();
-        MenuTelefono = new javax.swing.JMenu();
-        RegistrarTelefono = new javax.swing.JMenuItem();
         MenuTrabajador = new javax.swing.JMenu();
         RegistrarTrabajador = new javax.swing.JMenuItem();
 
@@ -199,18 +196,6 @@ public class ComprarLibros extends javax.swing.JFrame {
 
         jMenuBar1.add(MenuCategoria);
 
-        MenuDireccion.setText("Direccion");
-
-        RegistrarDireccion.setText("Registrar");
-        RegistrarDireccion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RegistrarDireccionActionPerformed(evt);
-            }
-        });
-        MenuDireccion.add(RegistrarDireccion);
-
-        jMenuBar1.add(MenuDireccion);
-
         MenuDistribuidor.setText("Distribuidor");
 
         RegistrarDistribuidor.setText("Registrar");
@@ -271,7 +256,7 @@ public class ComprarLibros extends javax.swing.JFrame {
 
         jMenuBar1.add(MenuMetodosPago);
 
-        MenuEstados.setText("Estados");
+        MenuEstados.setText("Estado Libros");
 
         RegistrarEstadoLibro.setText("Registrar");
         RegistrarEstadoLibro.addActionListener(new java.awt.event.ActionListener() {
@@ -282,18 +267,6 @@ public class ComprarLibros extends javax.swing.JFrame {
         MenuEstados.add(RegistrarEstadoLibro);
 
         jMenuBar1.add(MenuEstados);
-
-        MenuTelefono.setText("Telefono");
-
-        RegistrarTelefono.setText("Registrar");
-        RegistrarTelefono.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RegistrarTelefonoActionPerformed(evt);
-            }
-        });
-        MenuTelefono.add(RegistrarTelefono);
-
-        jMenuBar1.add(MenuTelefono);
 
         MenuTrabajador.setText("Trabajador");
 
@@ -329,6 +302,8 @@ public class ComprarLibros extends javax.swing.JFrame {
         DetalleCompra crearFactura = new DetalleCompra();
         crearFactura.setVisible(true);
         crearFactura.setResizable(false);
+        tablaLibros.setModel(modelo);
+        this.dispose();
 
     }//GEN-LAST:event_btnVerFacturaActionPerformed
 
@@ -336,66 +311,63 @@ public class ComprarLibros extends javax.swing.JFrame {
         RegistroAutor registroAutor = new RegistroAutor();
         registroAutor.setVisible(true);
         registroAutor.setResizable(false);
+        this.dispose();
     }//GEN-LAST:event_RegistrarAutorActionPerformed
 
     private void RegistrarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarCategoriaActionPerformed
         RegistroCategoria registroCategoria = new RegistroCategoria();
         registroCategoria.setVisible(true);
         registroCategoria.setResizable(false);
+        this.dispose();
     }//GEN-LAST:event_RegistrarCategoriaActionPerformed
-
-    private void RegistrarDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarDireccionActionPerformed
-        RegistroDireccion registroDireccion = new RegistroDireccion();
-        registroDireccion.setVisible(true);
-        registroDireccion.setResizable(false);
-    }//GEN-LAST:event_RegistrarDireccionActionPerformed
 
     private void RegistrarDistribuidorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarDistribuidorActionPerformed
         RegistroDistribuidor registroDistribuidor = new RegistroDistribuidor();
         registroDistribuidor.setVisible(true);
         registroDistribuidor.setResizable(false);
+        this.dispose();
     }//GEN-LAST:event_RegistrarDistribuidorActionPerformed
 
     private void RegistrarEditorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarEditorialActionPerformed
         RegistroEditorial registroEditorial = new RegistroEditorial();
         registroEditorial.setVisible(true);
         registroEditorial.setResizable(false);
+        this.dispose();
     }//GEN-LAST:event_RegistrarEditorialActionPerformed
 
     private void RegistrarIdiomaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarIdiomaActionPerformed
         RegistroIdioma registroIdioma = new RegistroIdioma();
         registroIdioma.setVisible(true);
         registroIdioma.setResizable(false);
+        this.dispose();
     }//GEN-LAST:event_RegistrarIdiomaActionPerformed
 
     private void RegistrarLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarLibrosActionPerformed
         RegistroLibro registroLibro = new RegistroLibro();
         registroLibro.setVisible(true);
         registroLibro.setResizable(false);
+        this.dispose();
     }//GEN-LAST:event_RegistrarLibrosActionPerformed
 
     private void RegistrarMetodoPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarMetodoPagoActionPerformed
         RegistroMetodoPago metodoPago = new RegistroMetodoPago();
         metodoPago.setVisible(true);
         metodoPago.setResizable(false);
+        this.dispose();
     }//GEN-LAST:event_RegistrarMetodoPagoActionPerformed
 
     private void RegistrarEstadoLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarEstadoLibroActionPerformed
         RegistroEstadoLibro registroEstadoLibro = new RegistroEstadoLibro();
         registroEstadoLibro.setVisible(true);
         registroEstadoLibro.setResizable(false);
+        this.dispose();
     }//GEN-LAST:event_RegistrarEstadoLibroActionPerformed
-
-    private void RegistrarTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarTelefonoActionPerformed
-        RegistroTelefono registroTelefono = new RegistroTelefono();
-        registroTelefono.setVisible(true);
-        registroTelefono.setResizable(false);
-    }//GEN-LAST:event_RegistrarTelefonoActionPerformed
 
     private void RegistrarTrabajadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarTrabajadorActionPerformed
         RegistroTrabajador registroTrabajador = new RegistroTrabajador();
         registroTrabajador.setVisible(true);
         registroTrabajador.setResizable(false);
+        this.dispose();
     }//GEN-LAST:event_RegistrarTrabajadorActionPerformed
 
     private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
@@ -403,7 +375,7 @@ public class ComprarLibros extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSeleccionarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-       eliminarLibro();
+        eliminarLibro();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
@@ -444,25 +416,21 @@ public class ComprarLibros extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu MenuAutor;
     private javax.swing.JMenu MenuCategoria;
-    private javax.swing.JMenu MenuDireccion;
     private javax.swing.JMenu MenuDistribuidor;
     private javax.swing.JMenu MenuEditorial;
     private javax.swing.JMenu MenuEstados;
     private javax.swing.JMenu MenuIdioma;
     private javax.swing.JMenu MenuLibros;
     private javax.swing.JMenu MenuMetodosPago;
-    private javax.swing.JMenu MenuTelefono;
     private javax.swing.JMenu MenuTrabajador;
     private javax.swing.JMenuItem RegistrarAutor;
     private javax.swing.JMenuItem RegistrarCategoria;
-    private javax.swing.JMenuItem RegistrarDireccion;
     private javax.swing.JMenuItem RegistrarDistribuidor;
     private javax.swing.JMenuItem RegistrarEditorial;
     private javax.swing.JMenuItem RegistrarEstadoLibro;
     private javax.swing.JMenuItem RegistrarIdioma;
     private javax.swing.JMenuItem RegistrarLibros;
     private javax.swing.JMenuItem RegistrarMetodoPago;
-    private javax.swing.JMenuItem RegistrarTelefono;
     private javax.swing.JMenuItem RegistrarTrabajador;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnSeleccionar;
@@ -476,7 +444,7 @@ public class ComprarLibros extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblLibros;
     private javax.swing.JTable tablaLibrosDisponibles;
-    public static javax.swing.JTable tablaLibrosSeleccionados;
+    public javax.swing.JTable tablaLibrosSeleccionados;
     // End of variables declaration//GEN-END:variables
 
     public void llenarTablaLibrosDisponibles() {
@@ -514,7 +482,7 @@ public class ComprarLibros extends javax.swing.JFrame {
             }
             tablaLibrosDisponibles.setModel(modelolibrosDisponibles);
         } catch (SQLException ex) {
-
+            
         }
     }
 
@@ -528,10 +496,7 @@ public class ComprarLibros extends javax.swing.JFrame {
                 filas[i] = tablaLibrosDisponibles.getValueAt(filaSeleccionada, i);
             }
             modelo.addRow(filas);
-            tablaLibros.setModel(modelo);
             tablaLibrosSeleccionados.setModel(modelo);
-        } else {
-            JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguna fila para añadir", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -540,9 +505,25 @@ public class ComprarLibros extends javax.swing.JFrame {
         if (filaSeleccionada >= 0) {
             modelo.removeRow(filaSeleccionada);
             tablaLibrosSeleccionados.setModel(modelo);
-            tablaLibros.setModel(modelo);
         } else {
             JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguna fila para eliminar", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+    public void obtenerLibros(Object[][] datos){
+        for (int i = 0; i < datos.length; i++) {
+            for (int j = 0; j < datos[0].length; j++) {
+                tablaLibrosSeleccionados.setValueAt(datos, i, j);
+            }
+            modelo.addRow(datos);
+            tablaLibrosSeleccionados.setModel(modelo);
+        }
+        for (int i = 0; i < tablaLibrosSeleccionados.getRowCount(); i++) {
+            for (int j = 0; j < tablaLibrosSeleccionados.getColumnCount(); j++) {
+                System.out.print(tablaLibrosSeleccionados.getValueAt(i, j));
+            }
+            System.out.println();
+        }
+    }
+    
+
 }

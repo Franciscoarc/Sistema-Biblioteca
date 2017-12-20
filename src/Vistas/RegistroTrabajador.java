@@ -85,13 +85,11 @@ public class RegistroTrabajador extends javax.swing.JFrame implements CRUD {
         btnBuscar = new javax.swing.JButton();
         fechaContratacion = new com.toedter.calendar.JDateChooser();
         Fondo1 = new javax.swing.JLabel();
-        jMenuBar5 = new javax.swing.JMenuBar();
-        MenuAutor4 = new javax.swing.JMenu();
-        RegistrarAutor4 = new javax.swing.JMenuItem();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        MenuAutor = new javax.swing.JMenu();
+        RegistrarAutor = new javax.swing.JMenuItem();
         MenuCategoria = new javax.swing.JMenu();
         RegistrarCategoria = new javax.swing.JMenuItem();
-        MenuDireccion = new javax.swing.JMenu();
-        RegistrarDireccion = new javax.swing.JMenuItem();
         MenuDistribuidor = new javax.swing.JMenu();
         RegistrarDistribuidor = new javax.swing.JMenuItem();
         MenuEditorial = new javax.swing.JMenu();
@@ -104,8 +102,6 @@ public class RegistroTrabajador extends javax.swing.JFrame implements CRUD {
         RegistrarMetodoPago = new javax.swing.JMenuItem();
         MenuEstados = new javax.swing.JMenu();
         RegistrarEstadoLibro = new javax.swing.JMenuItem();
-        MenuTelefono = new javax.swing.JMenu();
-        RegistrarTelefono = new javax.swing.JMenuItem();
         MenuTrabajador = new javax.swing.JMenu();
         RegistrarTrabajador = new javax.swing.JMenuItem();
 
@@ -309,17 +305,17 @@ public class RegistroTrabajador extends javax.swing.JFrame implements CRUD {
         Fondo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo.jpg"))); // NOI18N
         PanelPrincipal.add(Fondo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 500));
 
-        MenuAutor4.setText("Autor");
+        MenuAutor.setText("Autor");
 
-        RegistrarAutor4.setText("Registrar");
-        RegistrarAutor4.addActionListener(new java.awt.event.ActionListener() {
+        RegistrarAutor.setText("Registrar");
+        RegistrarAutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RegistrarAutor4ActionPerformed(evt);
+                RegistrarAutorActionPerformed(evt);
             }
         });
-        MenuAutor4.add(RegistrarAutor4);
+        MenuAutor.add(RegistrarAutor);
 
-        jMenuBar5.add(MenuAutor4);
+        jMenuBar1.add(MenuAutor);
 
         MenuCategoria.setText("Categoría");
 
@@ -331,19 +327,7 @@ public class RegistroTrabajador extends javax.swing.JFrame implements CRUD {
         });
         MenuCategoria.add(RegistrarCategoria);
 
-        jMenuBar5.add(MenuCategoria);
-
-        MenuDireccion.setText("Direccion");
-
-        RegistrarDireccion.setText("Registrar");
-        RegistrarDireccion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RegistrarDireccionActionPerformed(evt);
-            }
-        });
-        MenuDireccion.add(RegistrarDireccion);
-
-        jMenuBar5.add(MenuDireccion);
+        jMenuBar1.add(MenuCategoria);
 
         MenuDistribuidor.setText("Distribuidor");
 
@@ -355,7 +339,7 @@ public class RegistroTrabajador extends javax.swing.JFrame implements CRUD {
         });
         MenuDistribuidor.add(RegistrarDistribuidor);
 
-        jMenuBar5.add(MenuDistribuidor);
+        jMenuBar1.add(MenuDistribuidor);
 
         MenuEditorial.setText("Editorial");
 
@@ -367,7 +351,7 @@ public class RegistroTrabajador extends javax.swing.JFrame implements CRUD {
         });
         MenuEditorial.add(RegistrarEditorial);
 
-        jMenuBar5.add(MenuEditorial);
+        jMenuBar1.add(MenuEditorial);
 
         MenuIdioma.setText("Idioma");
 
@@ -379,7 +363,7 @@ public class RegistroTrabajador extends javax.swing.JFrame implements CRUD {
         });
         MenuIdioma.add(RegistrarIdioma);
 
-        jMenuBar5.add(MenuIdioma);
+        jMenuBar1.add(MenuIdioma);
 
         MenuLibros.setText("Libros");
 
@@ -391,7 +375,7 @@ public class RegistroTrabajador extends javax.swing.JFrame implements CRUD {
         });
         MenuLibros.add(RegistrarLibros);
 
-        jMenuBar5.add(MenuLibros);
+        jMenuBar1.add(MenuLibros);
 
         MenuMetodosPago.setText("Metodos de Pago");
 
@@ -403,9 +387,9 @@ public class RegistroTrabajador extends javax.swing.JFrame implements CRUD {
         });
         MenuMetodosPago.add(RegistrarMetodoPago);
 
-        jMenuBar5.add(MenuMetodosPago);
+        jMenuBar1.add(MenuMetodosPago);
 
-        MenuEstados.setText("Estados");
+        MenuEstados.setText("Estado Libros");
 
         RegistrarEstadoLibro.setText("Registrar");
         RegistrarEstadoLibro.addActionListener(new java.awt.event.ActionListener() {
@@ -415,19 +399,7 @@ public class RegistroTrabajador extends javax.swing.JFrame implements CRUD {
         });
         MenuEstados.add(RegistrarEstadoLibro);
 
-        jMenuBar5.add(MenuEstados);
-
-        MenuTelefono.setText("Telefono");
-
-        RegistrarTelefono.setText("Registrar");
-        RegistrarTelefono.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RegistrarTelefonoActionPerformed(evt);
-            }
-        });
-        MenuTelefono.add(RegistrarTelefono);
-
-        jMenuBar5.add(MenuTelefono);
+        jMenuBar1.add(MenuEstados);
 
         MenuTrabajador.setText("Trabajador");
 
@@ -439,9 +411,9 @@ public class RegistroTrabajador extends javax.swing.JFrame implements CRUD {
         });
         MenuTrabajador.add(RegistrarTrabajador);
 
-        jMenuBar5.add(MenuTrabajador);
+        jMenuBar1.add(MenuTrabajador);
 
-        setJMenuBar(jMenuBar5);
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -502,70 +474,67 @@ public class RegistroTrabajador extends javax.swing.JFrame implements CRUD {
         }
     }//GEN-LAST:event_tablaTrabajadorMouseClicked
 
-    private void RegistrarAutor4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarAutor4ActionPerformed
+    private void RegistrarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarAutorActionPerformed
         RegistroAutor registroAutor = new RegistroAutor();
         registroAutor.setVisible(true);
         registroAutor.setResizable(false);
-    }//GEN-LAST:event_RegistrarAutor4ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_RegistrarAutorActionPerformed
 
     private void RegistrarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarCategoriaActionPerformed
         RegistroCategoria registroCategoria = new RegistroCategoria();
         registroCategoria.setVisible(true);
         registroCategoria.setResizable(false);
+        this.dispose();
     }//GEN-LAST:event_RegistrarCategoriaActionPerformed
-
-    private void RegistrarDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarDireccionActionPerformed
-        RegistroDireccion registroDireccion = new RegistroDireccion();
-        registroDireccion.setVisible(true);
-        registroDireccion.setResizable(false);
-    }//GEN-LAST:event_RegistrarDireccionActionPerformed
 
     private void RegistrarDistribuidorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarDistribuidorActionPerformed
         RegistroDistribuidor registroDistribuidor = new RegistroDistribuidor();
         registroDistribuidor.setVisible(true);
         registroDistribuidor.setResizable(false);
+        this.dispose();
     }//GEN-LAST:event_RegistrarDistribuidorActionPerformed
 
     private void RegistrarEditorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarEditorialActionPerformed
         RegistroEditorial registroEditorial = new RegistroEditorial();
         registroEditorial.setVisible(true);
         registroEditorial.setResizable(false);
+        this.dispose();
     }//GEN-LAST:event_RegistrarEditorialActionPerformed
 
     private void RegistrarIdiomaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarIdiomaActionPerformed
         RegistroIdioma registroIdioma = new RegistroIdioma();
         registroIdioma.setVisible(true);
         registroIdioma.setResizable(false);
+        this.dispose();
     }//GEN-LAST:event_RegistrarIdiomaActionPerformed
 
     private void RegistrarLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarLibrosActionPerformed
         RegistroLibro registroLibro = new RegistroLibro();
         registroLibro.setVisible(true);
         registroLibro.setResizable(false);
+        this.dispose();
     }//GEN-LAST:event_RegistrarLibrosActionPerformed
 
     private void RegistrarMetodoPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarMetodoPagoActionPerformed
         RegistroMetodoPago metodoPago = new RegistroMetodoPago();
         metodoPago.setVisible(true);
         metodoPago.setResizable(false);
+        this.dispose();
     }//GEN-LAST:event_RegistrarMetodoPagoActionPerformed
 
     private void RegistrarEstadoLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarEstadoLibroActionPerformed
         RegistroEstadoLibro registroEstadoLibro = new RegistroEstadoLibro();
         registroEstadoLibro.setVisible(true);
         registroEstadoLibro.setResizable(false);
+        this.dispose();
     }//GEN-LAST:event_RegistrarEstadoLibroActionPerformed
-
-    private void RegistrarTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarTelefonoActionPerformed
-        RegistroTelefono registroTelefono = new RegistroTelefono();
-        registroTelefono.setVisible(true);
-        registroTelefono.setResizable(false);
-    }//GEN-LAST:event_RegistrarTelefonoActionPerformed
 
     private void RegistrarTrabajadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarTrabajadorActionPerformed
         RegistroTrabajador registroTrabajador = new RegistroTrabajador();
         registroTrabajador.setVisible(true);
         registroTrabajador.setResizable(false);
+        this.dispose();
     }//GEN-LAST:event_RegistrarTrabajadorActionPerformed
 
     /**
@@ -608,28 +577,24 @@ public class RegistroTrabajador extends javax.swing.JFrame implements CRUD {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Fondo1;
-    private javax.swing.JMenu MenuAutor4;
+    private javax.swing.JMenu MenuAutor;
     private javax.swing.JMenu MenuCategoria;
-    private javax.swing.JMenu MenuDireccion;
     private javax.swing.JMenu MenuDistribuidor;
     private javax.swing.JMenu MenuEditorial;
     private javax.swing.JMenu MenuEstados;
     private javax.swing.JMenu MenuIdioma;
     private javax.swing.JMenu MenuLibros;
     private javax.swing.JMenu MenuMetodosPago;
-    private javax.swing.JMenu MenuTelefono;
     private javax.swing.JMenu MenuTrabajador;
     private javax.swing.JPanel PanelPrincipal;
-    private javax.swing.JMenuItem RegistrarAutor4;
+    private javax.swing.JMenuItem RegistrarAutor;
     private javax.swing.JMenuItem RegistrarCategoria;
-    private javax.swing.JMenuItem RegistrarDireccion;
     private javax.swing.JMenuItem RegistrarDistribuidor;
     private javax.swing.JMenuItem RegistrarEditorial;
     private javax.swing.JMenuItem RegistrarEstadoLibro;
     private javax.swing.JMenuItem RegistrarIdioma;
     private javax.swing.JMenuItem RegistrarLibros;
     private javax.swing.JMenuItem RegistrarMetodoPago;
-    private javax.swing.JMenuItem RegistrarTelefono;
     private javax.swing.JMenuItem RegistrarTrabajador;
     private javax.swing.JLabel Titulo;
     private javax.swing.JButton btnBuscar;
@@ -641,7 +606,7 @@ public class RegistroTrabajador extends javax.swing.JFrame implements CRUD {
     private com.toedter.calendar.JDateChooser fechaContratacion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JMenuBar jMenuBar5;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
