@@ -145,6 +145,8 @@ public class RegistroIdioma extends javax.swing.JFrame implements CRUD{
                 return false;
             }
         };
+        tablaIdioma.setBackground(new java.awt.Color(0, 204, 255));
+        tablaIdioma.setForeground(new java.awt.Color(255, 255, 255));
         tablaIdioma.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 

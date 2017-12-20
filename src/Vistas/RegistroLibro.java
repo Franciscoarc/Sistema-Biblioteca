@@ -7,6 +7,7 @@ package Vistas;
 
 import ConexionBD.Conexion;
 import DAO.CRUD;
+import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,7 +34,7 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
     Connection con = conexion.conectar();
     PreparedStatement ps;
     ResultSet rs;
-    int modificar;
+    String modificar;
 
     public RegistroLibro() {
 
@@ -71,7 +72,7 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
         lblBuscar = new javax.swing.JLabel();
         txtBusqueda = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tablaLibros = new javax.swing.JTable();
+        tablaLibrosRegistrados = new javax.swing.JTable();
         btnBuscar = new javax.swing.JButton();
         txtISBNLibro = new javax.swing.JFormattedTextField();
         comboLibro = new javax.swing.JComboBox<>();
@@ -215,15 +216,15 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
         PanelPrincipal.add(lblBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 430, 70, 20));
         PanelPrincipal.add(txtBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 430, 130, -1));
 
-        tablaLibros = new javax.swing.JTable(){
+        tablaLibrosRegistrados = new javax.swing.JTable(){
             public boolean isCellEditable(int rowIndex, int colIndex){
                 return false;
             }
         };
-        tablaLibros.setAutoCreateRowSorter(true);
-        tablaLibros.setBackground(new java.awt.Color(0, 204, 255));
-        tablaLibros.setForeground(new java.awt.Color(255, 255, 255));
-        tablaLibros.setModel(new javax.swing.table.DefaultTableModel(
+        tablaLibrosRegistrados.setAutoCreateRowSorter(true);
+        tablaLibrosRegistrados.setBackground(new java.awt.Color(0, 204, 255));
+        tablaLibrosRegistrados.setForeground(new java.awt.Color(255, 255, 255));
+        tablaLibrosRegistrados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -231,17 +232,17 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
 
             }
         ));
-        tablaLibros.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        tablaLibros.setSelectionBackground(new java.awt.Color(153, 153, 255));
-        tablaLibros.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        tablaLibros.getTableHeader().setReorderingAllowed(false);
-        tablaLibros.addMouseListener(new java.awt.event.MouseAdapter() {
+        tablaLibrosRegistrados.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tablaLibrosRegistrados.setSelectionBackground(new java.awt.Color(153, 153, 255));
+        tablaLibrosRegistrados.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        tablaLibrosRegistrados.getTableHeader().setReorderingAllowed(false);
+        tablaLibrosRegistrados.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tablaLibrosMouseClicked(evt);
+                tablaLibrosRegistradosMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(tablaLibros);
-        tablaLibros.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        jScrollPane2.setViewportView(tablaLibrosRegistrados);
+        tablaLibrosRegistrados.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
         PanelPrincipal.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 470, 800, 140));
 
@@ -272,10 +273,11 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
         PanelPrincipal.add(lblNumeroSerie, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 110, 20));
 
         try {
-            txtNumeroSerieLibro.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##########")));
+            txtNumeroSerieLibro.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        txtNumeroSerieLibro.setText("");
         txtNumeroSerieLibro.setFocusLostBehavior(javax.swing.JFormattedTextField.PERSIST);
         PanelPrincipal.add(txtNumeroSerieLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 170, -1));
 
@@ -549,22 +551,22 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
         eliminar();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void tablaLibrosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaLibrosMouseClicked
+    private void tablaLibrosRegistradosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaLibrosRegistradosMouseClicked
         if (evt.getClickCount() == 2) {
-            int filaSeleccionada = tablaLibros.getSelectedRow();
-            modificar = Integer.parseInt(tablaLibros.getValueAt(filaSeleccionada, 0).toString());
-            String numeroSerie = tablaLibros.getValueAt(filaSeleccionada, 0).toString();
-            String ISBN = tablaLibros.getValueAt(filaSeleccionada, 1).toString();
-            String titulo = tablaLibros.getValueAt(filaSeleccionada, 2).toString();
-            String año = tablaLibros.getValueAt(filaSeleccionada, 3).toString();
-            String autores = tablaLibros.getValueAt(filaSeleccionada, 4).toString();
-            String numeroPaginas = tablaLibros.getValueAt(filaSeleccionada, 5).toString();
-            String precio = tablaLibros.getValueAt(filaSeleccionada, 6).toString();
+            int filaSeleccionada = tablaLibrosRegistrados.getSelectedRow();
+            modificar = tablaLibrosRegistrados.getValueAt(filaSeleccionada, 0).toString();
+            String numeroSerie = tablaLibrosRegistrados.getValueAt(filaSeleccionada, 0).toString();
+            String ISBN = tablaLibrosRegistrados.getValueAt(filaSeleccionada, 1).toString();
+            String titulo = tablaLibrosRegistrados.getValueAt(filaSeleccionada, 2).toString();
+            String año = tablaLibrosRegistrados.getValueAt(filaSeleccionada, 3).toString();
+            String autores = tablaLibrosRegistrados.getValueAt(filaSeleccionada, 4).toString();
+            String numeroPaginas = tablaLibrosRegistrados.getValueAt(filaSeleccionada, 5).toString();
+            String precio = tablaLibrosRegistrados.getValueAt(filaSeleccionada, 6).toString();
 
-            String editorial = tablaLibros.getValueAt(filaSeleccionada, 7).toString();
-            String idioma = tablaLibros.getValueAt(filaSeleccionada, 8).toString();
-            String categoria = tablaLibros.getValueAt(filaSeleccionada, 9).toString();
-            String estado = tablaLibros.getValueAt(filaSeleccionada, 10).toString();
+            String editorial = tablaLibrosRegistrados.getValueAt(filaSeleccionada, 7).toString();
+            String idioma = tablaLibrosRegistrados.getValueAt(filaSeleccionada, 8).toString();
+            String categoria = tablaLibrosRegistrados.getValueAt(filaSeleccionada, 9).toString();
+            String estado = tablaLibrosRegistrados.getValueAt(filaSeleccionada, 10).toString();
 
             txtNumeroSerieLibro.setText(numeroSerie);
             txtNumeroSerieLibro.setEnabled(false);
@@ -583,7 +585,7 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
             txtBusqueda.setText("");
 
         }
-    }//GEN-LAST:event_tablaLibrosMouseClicked
+    }//GEN-LAST:event_tablaLibrosRegistradosMouseClicked
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         modificar();
@@ -793,7 +795,7 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
     private javax.swing.JLabel lblPrecioReferencia;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JList<String> listaAutores;
-    private javax.swing.JTable tablaLibros;
+    private javax.swing.JTable tablaLibrosRegistrados;
     private javax.swing.JFormattedTextField txtAñoLibro;
     private javax.swing.JTextField txtBusqueda;
     private javax.swing.JFormattedTextField txtISBNLibro;
@@ -826,13 +828,13 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
             //Extraer DATOS DESDE CAMPOS para Actualizar
             List<String> autores = listaAutores.getSelectedValuesList();
             //Pedir datos para la inserción en ambas tablas
-            int numeroSerie = Integer.parseInt(txtNumeroSerieLibro.getText().trim());
+            String numeroSerie = txtNumeroSerieLibro.getText().trim();
             String ISBN = txtISBNLibro.getText().trim();
             String titulo = txtTituloLibro.getText().trim();
-            int año = Integer.parseInt(txtAñoLibro.getText().trim());
+            String año = txtAñoLibro.getText().trim();
             //List<String> autores = listaAutores.getSelectedValuesList();
-            int numeroPaginas = Integer.parseInt(txtNumeroPaginasLibro.getText().trim());
-            int precio = Integer.parseInt(txtPrecioLibro.getText().trim());
+            String numeroPaginas = txtNumeroPaginasLibro.getText().trim();
+            String precio = txtPrecioLibro.getText().trim();
             String editorial = comboEditorial.getSelectedItem().toString();
             String idioma = comboIdioma.getSelectedItem().toString();
             String categoria = comboCategoria.getSelectedItem().toString();
@@ -848,11 +850,11 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
                     + "PRECIO_REFERENCIA = " + precio + " , EDITORIAL_NOMBRE = '" + editorial + "' ,\n"
                     + "IDIOMA_IDIOMA = '" + idioma + "' , CATEGORIA_TIPO = '" + categoria + "' ,\n"
                     + "REGISTRO_ESTADO  = '" + estado + "'\n"
-                    + "WHERE NUMERO_DE_SERIE = " + modificar + " ";
+                    + "WHERE NUMERO_DE_SERIE = '" + modificar + "' ";
 
             String sqlUnion = "UPDATE AUTOR_LIBRO \n"
                     + "SET AUTOR_RUT = '" + ruts + "'\n"
-                    + "WHERE LIBRO_NUMERO_DE_SERIE = " + modificar + " ";
+                    + "WHERE LIBRO_NUMERO_DE_SERIE = '" + modificar + "' ";
 
             //Inserción en la tabla Libros
             ps = con.prepareStatement(sqlLibro);
@@ -860,33 +862,40 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
 
             ps = con.prepareStatement(sqlUnion);
             ps.executeUpdate();
+
             con.commit();
             JOptionPane.showMessageDialog(null, "Se ha modificado correctamente el valor en la base de datos", "Mensaje de Confirmación", JOptionPane.INFORMATION_MESSAGE);
             limpiar();
             listar();
-            con.commit();
         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getStackTrace(), "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
             String mensaje = "";
-            if (txtNumeroSerieLibro.getText().trim().length() == 0) {
+            if (txtNumeroSerieLibro.getText().trim().length() == 1 || txtNumeroSerieLibro.getText().trim().equals("-")) {
                 mensaje = mensaje.concat("No se ha ingresado ningún Número de Serie \n");
+                JOptionPane.showMessageDialog(null, mensaje, "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
             } else if (txtISBNLibro.getText().trim().length() == 0) {
                 mensaje = mensaje.concat("No se ha ingresado ningún ISBN \n");
+                JOptionPane.showMessageDialog(null, mensaje, "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
             } else if (txtISBNLibro.getText().trim().length() != 13) {
                 mensaje = mensaje.concat("No se ha ingresado un ISBN válido \n");
+                JOptionPane.showMessageDialog(null, mensaje, "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
             } else if (txtTituloLibro.getText().trim().length() == 0) {
                 mensaje = mensaje.concat("No se ha ingresado ningún Título \n");
+                JOptionPane.showMessageDialog(null, mensaje, "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
             } else if (txtAñoLibro.getText().trim().length() == 0) {
                 mensaje = mensaje.concat("No se ha ingresado Año de Publicación \n");
+                JOptionPane.showMessageDialog(null, mensaje, "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
             } else if (txtNumeroPaginasLibro.getText().trim().length() == 0) {
                 mensaje = mensaje.concat("No se ha ingresado Número de Páginas \n");
+                JOptionPane.showMessageDialog(null, mensaje, "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 try {
                     con.rollback();
                 } catch (SQLException ex1) {
                     mensaje = mensaje.concat("El Número de Serie y/o el Autor ya está en uso \n");
+                    JOptionPane.showMessageDialog(null, mensaje, "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
-            JOptionPane.showMessageDialog(null, mensaje, "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -996,13 +1005,13 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
 
             List<String> autores = listaAutores.getSelectedValuesList();
             //Pedir datos para la inserción en ambas tablas
-            int numeroSerie = Integer.parseInt(txtNumeroSerieLibro.getText().trim());
+            String numeroSerie = txtNumeroSerieLibro.getText().trim();
             String ISBN = txtISBNLibro.getText().trim();
             String titulo = txtTituloLibro.getText().trim();
-            int año = Integer.parseInt(txtAñoLibro.getText().trim());
+            String año = txtAñoLibro.getText().trim();
             //List<String> autores = listaAutores.getSelectedValuesList();
-            int numeroPaginas = Integer.parseInt(txtNumeroPaginasLibro.getText().trim());
-            int precio = Integer.parseInt(txtPrecioLibro.getText().trim());
+            String numeroPaginas = txtNumeroPaginasLibro.getText().trim();
+            String precio = txtPrecioLibro.getText().trim();
             String editorial = comboEditorial.getSelectedItem().toString();
             String idioma = comboIdioma.getSelectedItem().toString();
             String categoria = comboCategoria.getSelectedItem().toString();
@@ -1014,12 +1023,12 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
 
             //Inserción en la tabla Libros
             ps = con.prepareStatement(sqlLibro);
-            ps.setInt(1, numeroSerie);
+            ps.setString(1, numeroSerie);
             ps.setString(2, ISBN);
             ps.setString(3, titulo);
-            ps.setInt(4, año);
-            ps.setInt(5, numeroPaginas);
-            ps.setInt(6, precio);
+            ps.setString(4, año);
+            ps.setString(5, numeroPaginas);
+            ps.setString(6, precio);
             ps.setString(7, editorial);
             ps.setString(8, idioma);
             ps.setString(9, categoria);
@@ -1028,32 +1037,38 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
 
             ps = con.prepareStatement(sqlUnion);
             for (int j = 0; j < ruts.size(); j++) {
-                int numse = numeroSerie;
+                String numse = numeroSerie;
                 String palabra = (String) ruts.get(j);
-                ps.setInt(1, numse);
-                ps.setString(2, palabra);
+                ps.setString(1, palabra);
+                ps.setString(2, numse);
                 ps.addBatch();
             }
             int res[] = ps.executeBatch();
+            con.commit();
+            listar();
             JOptionPane.showMessageDialog(null, "Se ha ingresado correctamente el valor a la base de datos", "Mensaje de Confirmación", JOptionPane.INFORMATION_MESSAGE);
             limpiar();
-            listar();
-            con.commit();
-        } catch (Exception ex) {
-            int numeroSerie = Integer.parseInt(txtNumeroSerieLibro.getText().trim());
+        } catch (HeadlessException | SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
             String mensaje = "";
-            if (txtNumeroSerieLibro.getText().trim().length() == 0 || numeroSerie == 0  ) {
+            if (txtNumeroSerieLibro.getText().trim().length() == 1 || txtNumeroSerieLibro.getText().trim().equals("-")) {
                 mensaje = mensaje.concat("No se ha ingresado ningún Número de Serie \n");
+                JOptionPane.showMessageDialog(null, mensaje, "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
             } else if (txtISBNLibro.getText().trim().length() == 0) {
                 mensaje = mensaje.concat("No se ha ingresado ningún ISBN \n");
+                JOptionPane.showMessageDialog(null, mensaje, "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
             } else if (txtISBNLibro.getText().trim().length() != 13) {
                 mensaje = mensaje.concat("No se ha ingresado un ISBN válido \n");
+                JOptionPane.showMessageDialog(null, mensaje, "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
             } else if (txtTituloLibro.getText().trim().length() == 0) {
                 mensaje = mensaje.concat("No se ha ingresado ningún Título \n");
+                JOptionPane.showMessageDialog(null, mensaje, "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
             } else if (txtAñoLibro.getText().trim().length() == 0) {
                 mensaje = mensaje.concat("No se ha ingresado Año de Publicación \n");
+                JOptionPane.showMessageDialog(null, mensaje, "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
             } else if (txtNumeroPaginasLibro.getText().trim().length() == 0) {
                 mensaje = mensaje.concat("No se ha ingresado Número de Páginas \n");
+                JOptionPane.showMessageDialog(null, mensaje, "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
             } else {
 
                 try {
@@ -1062,7 +1077,6 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
                     Logger.getLogger(RegistroLibro.class.getName()).log(Level.SEVERE, null, ex1);
                 }
             }
-            JOptionPane.showMessageDialog(null, mensaje, "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -1124,27 +1138,27 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
     public void eliminar() {
 
         int filaseleccionada;
-        filaseleccionada = tablaLibros.getSelectedRow();
+        filaseleccionada = tablaLibrosRegistrados.getSelectedRow();
         if (filaseleccionada >= 0) {
             try {
                 con.setAutoCommit(false);
                 int seleccionar = JOptionPane.showConfirmDialog(null, "¿Desea Eliminar este Registro?", "Confirmación", JOptionPane.YES_NO_OPTION);
                 if (seleccionar == 0) {
-                    String sqlLibro = "DELETE FROM Libro WHERE NUMERO_DE_SERIE = ?";
-                    String sqlUnion = "DELETE FROM AUTOR_LIBRO WHERE LIBRO_NUMERO_DE_SERIE = ?";
-                    String valor = tablaLibros.getValueAt(filaseleccionada, 0).toString();
+                    String sqlLibro = "DELETE FROM Libro WHERE NUMERO_DE_SERIE = '?'";
+                    String sqlUnion = "DELETE FROM AUTOR_LIBRO WHERE LIBRO_NUMERO_DE_SERIE = '?'";
+                    String valor = tablaLibrosRegistrados.getValueAt(filaseleccionada, 0).toString();
                     ps = con.prepareStatement(sqlLibro);
                     ps.setString(1, valor);
                     ps.addBatch();
-                    
+
                     ps = con.prepareStatement(sqlUnion);
                     ps.setString(1, valor);
                     ps.addBatch();
-                    
+
                     ps.executeBatch();
-                    
+
                     con.commit();
-                    JOptionPane.showMessageDialog(null,"Se ha eliminado el registro de la tabla ", "Ventana", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Se ha eliminado el registro de la tabla ", "Ventana", JOptionPane.INFORMATION_MESSAGE);
                     listar();
                     limpiar();
                 }
@@ -1160,12 +1174,12 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
     public void listar() {
         DefaultTableModel modelo = new DefaultTableModel();
         try {
-            String sql = "SELECT li.NUMERO_DE_SERIE, li.ISBN, li.TITULO, li.\"AÑO_PUBLICACIÓN\", au.NOMBRE ||' ' || au.APELLIDO_PATERNO||' ' || au.APELLIDO_MATERNO AS \"NOMBRE COMPLETO\", li.\"NUMERO_DE_PÁGINAS\",li.PRECIO_REFERENCIA,li.EDITORIAL_NOMBRE,li.IDIOMA_IDIOMA,li.CATEGORIA_TIPO,li.REGISTRO_ESTADO\n"
-                    + "from LIBRO li\n"
+            String sql = "SELECT li.NUMERO_DE_SERIE, li.ISBN, li.TITULO, li.\"AÑO_PUBLICACIÓN\", au.NOMBRE || ' ' || au.APELLIDO_PATERNO || ' ' || au.APELLIDO_MATERNO as \"Nombre Autor\", li.\"NUMERO_DE_PÁGINAS\",li.PRECIO_REFERENCIA,li.EDITORIAL_NOMBRE,li.IDIOMA_IDIOMA,li.CATEGORIA_TIPO,li.REGISTRO_ESTADO\n"
+                    + "FROM LIBRO li\n"
                     + "JOIN AUTOR_LIBRO auli\n"
-                    + "on li.NUMERO_DE_SERIE = auli.LIBRO_NUMERO_DE_SERIE\n"
+                    + "on auli.LIBRO_NUMERO_DE_SERIE = li.NUMERO_DE_SERIE\n"
                     + "JOIN AUTOR au\n"
-                    + "on auli.AUTOR_RUT = au.RUT";
+                    + "on au.RUT = auli.AUTOR_RUT";
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             ResultSetMetaData rsmd = rs.getMetaData();
@@ -1181,15 +1195,14 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
             modelo.addColumn("Idioma");
             modelo.addColumn("Categoria");
             modelo.addColumn("Estado");
-
+            Object[] filas = new Object[cantColumnas];
             while (rs.next()) {
-                Object[] filas = new Object[cantColumnas];
                 for (int i = 0; i < cantColumnas; i++) {
                     filas[i] = rs.getObject(i + 1);
                 }
                 modelo.addRow(filas);
             }
-            tablaLibros.setModel(modelo);
+            tablaLibrosRegistrados.setModel(modelo);
         } catch (SQLException ex) {
 
         }
@@ -1233,7 +1246,7 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
                     }
                     modelo.addRow(filas);
                 }
-                tablaLibros.setModel(modelo);
+                tablaLibrosRegistrados.setModel(modelo);
 
             }
 

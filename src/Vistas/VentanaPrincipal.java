@@ -271,63 +271,54 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         RegistroAutor registroAutor = new RegistroAutor();
         registroAutor.setVisible(true);
         registroAutor.setResizable(false);
-        this.dispose();
     }//GEN-LAST:event_RegistrarAutorActionPerformed
 
     private void RegistrarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarCategoriaActionPerformed
         RegistroCategoria registroCategoria = new RegistroCategoria();
         registroCategoria.setVisible(true);
         registroCategoria.setResizable(false);
-        this.dispose();
     }//GEN-LAST:event_RegistrarCategoriaActionPerformed
 
     private void RegistrarDistribuidorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarDistribuidorActionPerformed
         RegistroDistribuidor registroDistribuidor = new RegistroDistribuidor();
         registroDistribuidor.setVisible(true);
         registroDistribuidor.setResizable(false);
-        this.dispose();
     }//GEN-LAST:event_RegistrarDistribuidorActionPerformed
 
     private void RegistrarEditorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarEditorialActionPerformed
         RegistroEditorial registroEditorial = new RegistroEditorial();
         registroEditorial.setVisible(true);
         registroEditorial.setResizable(false);
-        this.dispose();
     }//GEN-LAST:event_RegistrarEditorialActionPerformed
 
     private void RegistrarIdiomaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarIdiomaActionPerformed
         RegistroIdioma registroIdioma = new RegistroIdioma();
         registroIdioma.setVisible(true);
         registroIdioma.setResizable(false);
-        this.dispose();
     }//GEN-LAST:event_RegistrarIdiomaActionPerformed
 
     private void RegistrarLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarLibrosActionPerformed
         RegistroLibro registroLibro = new RegistroLibro();
         registroLibro.setVisible(true);
         registroLibro.setResizable(false);
-        this.dispose();
     }//GEN-LAST:event_RegistrarLibrosActionPerformed
 
     private void RegistrarMetodoPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarMetodoPagoActionPerformed
         RegistroMetodoPago metodoPago = new RegistroMetodoPago();
         metodoPago.setVisible(true);
         metodoPago.setResizable(false);
-        this.dispose();
     }//GEN-LAST:event_RegistrarMetodoPagoActionPerformed
 
     private void RegistrarEstadoLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarEstadoLibroActionPerformed
         RegistroEstadoLibro registroEstadoLibro = new RegistroEstadoLibro();
         registroEstadoLibro.setVisible(true);
         registroEstadoLibro.setResizable(false);
-        this.dispose();
     }//GEN-LAST:event_RegistrarEstadoLibroActionPerformed
 
     private void RegistrarTrabajadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarTrabajadorActionPerformed
         RegistroTrabajador registroTrabajador = new RegistroTrabajador();
         registroTrabajador.setVisible(true);
         registroTrabajador.setResizable(false);
-        this.dispose();
     }//GEN-LAST:event_RegistrarTrabajadorActionPerformed
 
     /**

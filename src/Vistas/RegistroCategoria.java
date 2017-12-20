@@ -199,9 +199,9 @@ public class RegistroCategoria extends javax.swing.JFrame implements CRUD {
         jPanel1.add(btnBuscar);
         btnBuscar.setBounds(620, 280, 90, 23);
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo.jpg"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Fondo.jpg"))); // NOI18N
         jPanel1.add(jLabel2);
-        jLabel2.setBounds(0, 0, 0, 500);
+        jLabel2.setBounds(0, 0, 800, 500);
 
         MenuAutor.setText("Autor");
 

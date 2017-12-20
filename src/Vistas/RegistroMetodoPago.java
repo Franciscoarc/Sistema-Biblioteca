@@ -145,6 +145,8 @@ public class RegistroMetodoPago extends javax.swing.JFrame implements CRUD {
                 return false;
             }
         };
+        tablaMetodoPago.setBackground(new java.awt.Color(0, 204, 255));
+        tablaMetodoPago.setForeground(new java.awt.Color(255, 255, 255));
         tablaMetodoPago.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -194,9 +196,9 @@ public class RegistroMetodoPago extends javax.swing.JFrame implements CRUD {
         jPanel1.add(txtMetodoPago);
         txtMetodoPago.setBounds(370, 90, 150, 20);
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo.jpg"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Fondo.jpg"))); // NOI18N
         jPanel1.add(jLabel2);
-        jLabel2.setBounds(0, 0, 0, 500);
+        jLabel2.setBounds(0, 0, 800, 500);
 
         MenuAutor.setText("Autor");
 

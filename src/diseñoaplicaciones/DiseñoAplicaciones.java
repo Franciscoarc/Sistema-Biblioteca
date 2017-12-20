@@ -7,7 +7,6 @@ package diseñoaplicaciones;
 
 import ConexionBD.Conexion;
 import Vistas.VentanaPrincipal;
-import java.sql.SQLException;
 
 /**
  *
