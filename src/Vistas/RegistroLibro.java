@@ -825,7 +825,7 @@ public class RegistroLibro extends javax.swing.JFrame implements CRUD {
     public void modificar() {
         try {
             con.setAutoCommit(false);
-
+            
             //Extraer DATOS DESDE CAMPOS para Actualizar
             List<String> autores = listaAutores.getSelectedValuesList();
             //Pedir datos para la inserción en ambas tablas

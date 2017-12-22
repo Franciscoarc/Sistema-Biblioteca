@@ -1,40 +1,37 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Vistas;
 
 import ConexionBD.Conexion;
+import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author panch
- */
-public class DetalleCompra extends javax.swing.JFrame {
+public class DevolverLibros extends javax.swing.JFrame {
 
-    public static final double IVA = 0.19;
-    public static final String VALORIVA = "19%";
     Conexion conexion = new Conexion();
     Connection con = conexion.conectar();
     PreparedStatement ps;
     ResultSet rs;
-    DefaultTableModel modeloLibros = new DefaultTableModel();
-    ComprarLibros comprarLibros = new ComprarLibros();
+    DefaultTableModel modelo = new DefaultTableModel();
 
-    public DetalleCompra() {
+    public DevolverLibros() {
         initComponents();
-        llenarComboDistribuidor();
-        llenarComboPago();
-        String sql = "123";
-
+        modelo.addColumn("N° Serie");
+        modelo.addColumn("ISBN");
+        modelo.addColumn("Título");
+        modelo.addColumn("Año");
+        modelo.addColumn("Autores");
+        modelo.addColumn("Páginas");
+        modelo.addColumn("Precio");
+        modelo.addColumn("Editorial");
+        modelo.addColumn("Idioma");
+        modelo.addColumn("Categoria");
     }
 
     @SuppressWarnings("unchecked")
@@ -43,25 +40,12 @@ public class DetalleCompra extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        btnVolverSeleccion = new javax.swing.JButton();
-        btnCrearFactura = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tablaLibros = new javax.swing.JTable();
-        lblMetodoPago = new javax.swing.JLabel();
-        comboPago = new javax.swing.JComboBox<>();
-        lblDistribuidor = new javax.swing.JLabel();
-        comboDistribuidor = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        lblPrecioNeto = new javax.swing.JLabel();
-        txtPrecioNeto = new javax.swing.JTextField();
-        txtPrecioConIVA = new javax.swing.JTextField();
-        lblPrecioConIVA = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        txtCostodelIVA = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        txtFechaCompra = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        btnDevolverLibros = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaLibrosDevueltos = new javax.swing.JTable();
+        btnBuscarLibros = new javax.swing.JButton();
+        txtBusquedaPorRUT = new javax.swing.JFormattedTextField();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         MenuAutor = new javax.swing.JMenu();
@@ -84,41 +68,37 @@ public class DetalleCompra extends javax.swing.JFrame {
         RegistrarTrabajador = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setResizable(false);
 
         jPanel1.setLayout(null);
 
         jLabel2.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Detalle Compra");
+        jLabel2.setText("Devolución de Libros");
         jPanel1.add(jLabel2);
-        jLabel2.setBounds(260, 10, 270, 40);
+        jLabel2.setBounds(250, 10, 370, 60);
 
-        btnVolverSeleccion.setText("Volver a Comprar Libros");
-        btnVolverSeleccion.addActionListener(new java.awt.event.ActionListener() {
+        jLabel3.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Ingrese su RUT");
+        jPanel1.add(jLabel3);
+        jLabel3.setBounds(80, 90, 110, 20);
+
+        btnDevolverLibros.setText("Devolver");
+        btnDevolverLibros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVolverSeleccionActionPerformed(evt);
+                btnDevolverLibrosActionPerformed(evt);
             }
         });
-        jPanel1.add(btnVolverSeleccion);
-        btnVolverSeleccion.setBounds(30, 440, 160, 40);
+        jPanel1.add(btnDevolverLibros);
+        btnDevolverLibros.setBounds(700, 80, 120, 40);
 
-        btnCrearFactura.setText("Crear Factura");
-        btnCrearFactura.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCrearFacturaActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnCrearFactura);
-        btnCrearFactura.setBounds(600, 440, 170, 40);
-
-        tablaLibros = new javax.swing.JTable(){
+        tablaLibrosDevueltos = new javax.swing.JTable(){
             public boolean isCellEditable(int rowIndex, int colIndex){
                 return false;
             }
         };
-        tablaLibros.setModel(new javax.swing.table.DefaultTableModel(
+        tablaLibrosDevueltos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -126,98 +106,35 @@ public class DetalleCompra extends javax.swing.JFrame {
 
             }
         ));
-        tablaLibros.setSelectionBackground(new java.awt.Color(0, 204, 255));
-        tablaLibros.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(tablaLibros);
-        tablaLibros.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        tablaLibrosDevueltos.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tablaLibrosDevueltos);
+        tablaLibrosDevueltos.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
         jPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(30, 140, 740, 130);
+        jScrollPane1.setBounds(60, 200, 780, 120);
 
-        lblMetodoPago.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        lblMetodoPago.setForeground(new java.awt.Color(255, 255, 255));
-        lblMetodoPago.setText("Método de Pago");
-        jPanel1.add(lblMetodoPago);
-        lblMetodoPago.setBounds(440, 80, 100, 20);
+        btnBuscarLibros.setText("Buscar");
+        btnBuscarLibros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarLibrosActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnBuscarLibros);
+        btnBuscarLibros.setBounds(360, 80, 140, 40);
 
-        comboPago.setToolTipText("Seleccione su método de Pago");
-        jPanel1.add(comboPago);
-        comboPago.setBounds(550, 80, 150, 20);
+        try {
+            txtBusquedaPorRUT.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###-A")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtBusquedaPorRUT.setText(".   .   -");
+        txtBusquedaPorRUT.setFocusLostBehavior(javax.swing.JFormattedTextField.PERSIST);
+        jPanel1.add(txtBusquedaPorRUT);
+        txtBusquedaPorRUT.setBounds(200, 90, 140, 20);
 
-        lblDistribuidor.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        lblDistribuidor.setForeground(new java.awt.Color(255, 255, 255));
-        lblDistribuidor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblDistribuidor.setText("Distribuidor");
-        jPanel1.add(lblDistribuidor);
-        lblDistribuidor.setBounds(60, 80, 80, 20);
-
-        jPanel1.add(comboDistribuidor);
-        comboDistribuidor.setBounds(140, 80, 150, 20);
-
-        jLabel3.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Detalle Libros");
-        jPanel1.add(jLabel3);
-        jLabel3.setBounds(30, 110, 110, 30);
-
-        lblPrecioNeto.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        lblPrecioNeto.setForeground(new java.awt.Color(255, 255, 255));
-        lblPrecioNeto.setText("Precio Neto");
-        jPanel1.add(lblPrecioNeto);
-        lblPrecioNeto.setBounds(80, 300, 80, 20);
-
-        txtPrecioNeto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtPrecioNeto.setEnabled(false);
-        jPanel1.add(txtPrecioNeto);
-        txtPrecioNeto.setBounds(180, 300, 110, 20);
-
-        txtPrecioConIVA.setEnabled(false);
-        jPanel1.add(txtPrecioConIVA);
-        txtPrecioConIVA.setBounds(180, 380, 110, 20);
-
-        lblPrecioConIVA.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        lblPrecioConIVA.setForeground(new java.awt.Color(255, 255, 255));
-        lblPrecioConIVA.setText("Precio Con IVA");
-        jPanel1.add(lblPrecioConIVA);
-        lblPrecioConIVA.setBounds(80, 380, 100, 20);
-
-        jLabel4.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Costo del IVA");
-        jPanel1.add(jLabel4);
-        jLabel4.setBounds(70, 340, 90, 14);
-
-        txtCostodelIVA.setEnabled(false);
-        jPanel1.add(txtCostodelIVA);
-        txtCostodelIVA.setBounds(180, 340, 110, 20);
-
-        jLabel5.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Fecha");
-        jPanel1.add(jLabel5);
-        jLabel5.setBounds(530, 310, 50, 20);
-
-        jLabel6.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("Hora");
-        jPanel1.add(jLabel6);
-        jLabel6.setBounds(530, 350, 40, 17);
-
-        txtFechaCompra.setEnabled(false);
-        jPanel1.add(txtFechaCompra);
-        txtFechaCompra.setBounds(610, 310, 140, 20);
-
-        jTextField2.setEnabled(false);
-        jPanel1.add(jTextField2);
-        jTextField2.setBounds(610, 350, 140, 20);
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Fondo.jpg"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/FondoLibro.jpg"))); // NOI18N
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(0, 0, 800, 500);
+        jLabel1.setBounds(0, 0, 910, 520);
 
         MenuAutor.setText("Autor");
 
@@ -333,33 +250,15 @@ public class DetalleCompra extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 801, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 912, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnCrearFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearFacturaActionPerformed
-        CrearFactura crearFactura = new CrearFactura();
-        crearFactura.setVisible(true);
-        crearFactura.setResizable(false);
-    }//GEN-LAST:event_btnCrearFacturaActionPerformed
-
-    private void btnVolverSeleccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverSeleccionActionPerformed
-
-        comprarLibros.modelo = (DefaultTableModel) tablaLibros.getModel();
-        comprarLibros.tablaLibrosSeleccionados.setModel(comprarLibros.modelo);
-        comprarLibros.setVisible(true);
-        comprarLibros.setResizable(false);
-        this.dispose();
-
-    }//GEN-LAST:event_btnVolverSeleccionActionPerformed
 
     private void RegistrarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarAutorActionPerformed
         RegistroAutor registroAutor = new RegistroAutor();
@@ -424,6 +323,14 @@ public class DetalleCompra extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_RegistrarTrabajadorActionPerformed
 
+    private void btnBuscarLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarLibrosActionPerformed
+        buscarLibrosArrendados();
+    }//GEN-LAST:event_btnBuscarLibrosActionPerformed
+
+    private void btnDevolverLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolverLibrosActionPerformed
+        devolverLibros();
+    }//GEN-LAST:event_btnDevolverLibrosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -441,21 +348,20 @@ public class DetalleCompra extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DetalleCompra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DevolverLibros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DetalleCompra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DevolverLibros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DetalleCompra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DevolverLibros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DetalleCompra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DevolverLibros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DetalleCompra().setVisible(true);
+                new DevolverLibros().setVisible(true);
             }
         });
     }
@@ -479,55 +385,149 @@ public class DetalleCompra extends javax.swing.JFrame {
     private javax.swing.JMenuItem RegistrarLibros;
     private javax.swing.JMenuItem RegistrarMetodoPago;
     private javax.swing.JMenuItem RegistrarTrabajador;
-    private javax.swing.JButton btnCrearFactura;
-    private javax.swing.JButton btnVolverSeleccion;
-    public static javax.swing.JComboBox<String> comboDistribuidor;
-    private javax.swing.JComboBox<String> comboPago;
+    private javax.swing.JButton btnBuscarLibros;
+    private javax.swing.JButton btnDevolverLibros;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JLabel lblDistribuidor;
-    private javax.swing.JLabel lblMetodoPago;
-    private javax.swing.JLabel lblPrecioConIVA;
-    private javax.swing.JLabel lblPrecioNeto;
-    public static javax.swing.JTable tablaLibros;
-    private javax.swing.JTextField txtCostodelIVA;
-    private javax.swing.JTextField txtFechaCompra;
-    private javax.swing.JTextField txtPrecioConIVA;
-    private javax.swing.JTextField txtPrecioNeto;
+    private javax.swing.JTable tablaLibrosDevueltos;
+    private javax.swing.JFormattedTextField txtBusquedaPorRUT;
     // End of variables declaration//GEN-END:variables
 
-    public void llenarComboDistribuidor() {
+    public void buscarLibrosArrendados() {
+        Object[] datos;
         try {
-            String sql = "SELECT * FROM Distribuidor";
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                comboDistribuidor.addItem(rs.getString("NOMBRE"));
+            String rut = txtBusquedaPorRUT.getText().trim();
+            boolean verificar = consultarRut(rut);
+            if (verificar) {
+                //Consulta que devuelve si existe, los libros arrendados al trabajador;
+                String sqlBusqueda = "SELECT libro.NUMERO_DE_SERIE, libro.ISBN, libro.TITULO, libro.\"AÑO_PUBLICACIÓN\", au.NOMBRE || ' ' || au.APELLIDO_PATERNO ||' ' || au.APELLIDO_MATERNO as \"NOMBRE COMPLETO\", libro.\"NUMERO_DE_PÁGINAS\",libro.PRECIO_REFERENCIA, libro.EDITORIAL_NOMBRE,libro.IDIOMA_IDIOMA, libro.CATEGORIA_TIPO \n"
+                        + "FROM LIBRO libro\n"
+                        + "JOIN AUTOR_LIBRO auli\n"
+                        + "on auli.LIBRO_NUMERO_DE_SERIE = libro.NUMERO_DE_SERIE\n"
+                        + "JOIN AUTOR au\n"
+                        + "on auli.AUTOR_RUT = au.RUT\n"
+                        + "JOIN PRESTAMO_LIBRO preli\n"
+                        + "ON preli.LIBRO_NUMERO_DE_SERIE = libro.NUMERO_DE_SERIE\n"
+                        + "JOIN PRESTAMO pres\n"
+                        + "on preli.PRESTAMO_CODIGO_PRESTAMO = pres.CODIGO_PRESTAMO\n"
+                        + "JOIN TRABAJADOR tra\n"
+                        + "on pres.TRABAJADOR_RUT = tra.RUT\n"
+                        + "WHERE pres.TRABAJADOR_RUT = '" + rut + "'";
+
+                ps = con.prepareStatement(sqlBusqueda);
+                rs = ps.executeQuery();
+                ResultSetMetaData rsmd = rs.getMetaData();
+                int cantColumnas = rsmd.getColumnCount();
+                while (rs.next()) {
+                    datos = new Object[cantColumnas];
+                    for (int i = 0; i < cantColumnas; i++) {
+                        datos[i] = rs.getObject(i + 1);
+                    }
+                    modelo.addRow(datos);
+                    tablaLibrosDevueltos.setModel(modelo);
+                }
+            } else {
+                modelo.setRowCount(0);
+                JOptionPane.showMessageDialog(null, "No existe un Trabajador con este RUT", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
+
+        } catch (HeadlessException | SQLException ex) {
+            String rut = txtBusquedaPorRUT.getText().trim();
+            int largo = rut.length();
+            String verificalinea = rut.substring(largo - 1);
+            String punto = Character.toString(rut.charAt(0));
+            if (rut.equals(".   .   -")) {
+                JOptionPane.showMessageDialog(null, "No se ha ingresado RUT", "ERROR", JOptionPane.ERROR_MESSAGE);
+            } else if (largo <= 10 || verificalinea.equals("-") || punto.equals(".")) {
+                JOptionPane.showMessageDialog(null, "RUT imcompleto", "ERROR", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+
+        }
+
+    }
+
+    public boolean consultarRut(String rut) {
+        boolean valida = false;
+        try {
+            String sqlRut = "SELECT RUT FROM Trabajador WHERE RUT = '" + rut + "'";
+            ps = con.prepareStatement(sqlRut);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                valida = true;
+            }
+
         } catch (SQLException ex) {
-            Logger.getLogger(RegistroAutor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Prestamos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return valida;
+    }
+
+    public void devolverLibros() {
+        String actualizarLibro = "UPDATE LIBRO SET REGISTRO_ESTADO ='Disponible' WHERE NUMERO_DE_SERIE = ?";
+        String sqlEliminarRelacion = "DELETE FROM PRESTAMO_LIBRO WHERE LIBRO_NUMERO_DE_SERIE = ?  AND PRESTAMO_CODIGO_PRESTAMO = ?";
+        int fila = tablaLibrosDevueltos.getSelectedRow();
+        String rut = txtBusquedaPorRUT.getText().trim();
+        boolean verificar = consultarRut(rut);
+        if (fila >= 0) {
+            if (verificar) {
+                try {
+                    con.setAutoCommit(false);
+                    String codigoPrestamo = obtenerCodigo(rut);
+                    String ISSN = tablaLibrosDevueltos.getValueAt(fila, 0).toString();
+
+                    ps = con.prepareStatement(sqlEliminarRelacion);
+                    ps.setString(1, ISSN);
+                    ps.setString(2, codigoPrestamo);
+                    ps.executeUpdate();
+                    
+                    con.commit();
+
+                    ps = con.prepareStatement(actualizarLibro);
+                    ps.setString(1, ISSN);
+                    ps.executeUpdate();
+                    
+                    con.commit();
+                    
+                    recargar(fila);
+                    JOptionPane.showMessageDialog(null, "Se ha devuelvo correctamente el libro", "Error", JOptionPane.INFORMATION_MESSAGE);
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe un Trabajador con ese RUT. Por favor verificar", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguna fila Por favor verificar", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    public void llenarComboPago() {
+    private String obtenerCodigo(String rut) {
+        String codigo = "";
         try {
-            String sql = "SELECT * FROM Pago";
-            ps = con.prepareStatement(sql);
+            String sqlCodigo = "SELECT * FROM PRESTAMO WHERE TRABAJADOR_RUT ='" + rut + "' ";
+
+            ps = con.prepareStatement(sqlCodigo);
             rs = ps.executeQuery();
-            while (rs.next()) {
-                comboPago.addItem(rs.getString("METODO"));
+            if (rs.next()) {
+                codigo = rs.getString("CODIGO_PRESTAMO");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(RegistroAutor.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "No se ha encontrado", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
+        return codigo;
+
+    }
+
+    private void recargar(int fila) {
+        modelo.removeRow(fila);
+        tablaLibrosDevueltos.setModel(modelo);
     }
 
 }

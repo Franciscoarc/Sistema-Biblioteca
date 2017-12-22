@@ -49,7 +49,9 @@ public class Prestamos extends javax.swing.JFrame {
         modelolibrosDisponibles.addColumn("Editorial");
         modelolibrosDisponibles.addColumn("Idioma");
         modelolibrosDisponibles.addColumn("Categoria");
+        formatearCalendarios();
         llenarTablaLibrosDisponibles();
+        limpiar();
         fechaArriendo();
     }
 
@@ -112,7 +114,7 @@ public class Prestamos extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(jTable1);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -362,9 +364,7 @@ public class Prestamos extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -586,7 +586,6 @@ public class Prestamos extends javax.swing.JFrame {
     }
 
     public void arrendarLibro() {
-        int total;
         try {
             con.setAutoCommit(false);
             String rut = txtBusquedaTrabajador.getText().trim();
@@ -609,6 +608,7 @@ public class Prestamos extends javax.swing.JFrame {
                 ps = con.prepareStatement(sqlPrestamo);
                 ps.setString(1, generado);
                 ps.setDate(2, new java.sql.Date(fecha.getTime()));
+                Date fechaEstimada = fechaEstimadaDevolucion.getDate();
                 ps.setDate(3, new java.sql.Date(fechaEstimadaDevolucion.getDate().getTime()));
                 ps.setDate(4, new java.sql.Date(fechaEntrega.getDate().getTime()));
                 ps.setString(5, rut);
@@ -629,9 +629,14 @@ public class Prestamos extends javax.swing.JFrame {
                 }
 
                 ps.executeUpdate();
+                modelolibrosDisponibles.setRowCount(0);
+                modelo.setRowCount(0);
+                tablaLibrosArrendados.setModel(modelo);
+                tablaLibrosDisponibles.setModel(modelolibrosDisponibles);
                 llenarTablaLibrosDisponibles();
+                limpiar();
                 JOptionPane.showMessageDialog(null, "Solicitud COMPLETADA", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
-                
+
                 con.commit();
             } else if (filas > 0 && !verificar) {
                 JOptionPane.showMessageDialog(null, "No se ha podido encontrar el Trabajador con ese RUT o su RUT está mal puesto");
@@ -660,9 +665,15 @@ public class Prestamos extends javax.swing.JFrame {
             } else if (fechaEntrega.getDate() == null) {
                 JOptionPane.showMessageDialog(null, "No se ha ingresado la fecha de Entrega de los Libros", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null, ex.getLocalizedMessage(), "Error",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, ex.getLocalizedMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
+    }
+
+    public void limpiar() {
+        txtBusquedaTrabajador.setText("");
+        fechaEntrega.setCalendar(null);
+        fechaEstimadaDevolucion.setCalendar(null);
     }
 
     public String generarCodigo() {
@@ -701,4 +712,8 @@ public class Prestamos extends javax.swing.JFrame {
         return valida;
     }
 
+    public void formatearCalendarios(){
+        fechaEstimadaDevolucion.setMinSelectableDate(fecha);
+        fechaEntrega.setMinSelectableDate(fecha);
+    }
 }

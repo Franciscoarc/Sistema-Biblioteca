@@ -2,6 +2,7 @@ package Vistas;
 
 import ConexionBD.Conexion;
 import java.sql.Connection;
+import static Vistas.DetalleCompra.tablaLibros;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -15,7 +16,7 @@ public class ComprarLibros extends javax.swing.JFrame {
     Connection con = conexion.conectar();
     PreparedStatement ps;
     ResultSet rs;
-    public DefaultTableModel modelo = new DefaultTableModel();
+    DefaultTableModel modelo = new DefaultTableModel();
 
     public ComprarLibros() {
 
@@ -124,7 +125,6 @@ public class ComprarLibros extends javax.swing.JFrame {
 
             }
         ));
-        tablaLibrosSeleccionados.setColumnSelectionAllowed(true);
         tablaLibrosSeleccionados.setSelectionBackground(new java.awt.Color(0, 153, 255));
         tablaLibrosSeleccionados.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tablaLibrosSeleccionados);
@@ -298,10 +298,10 @@ public class ComprarLibros extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVerFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerFacturaActionPerformed
-        DetalleCompra crearFactura = new DetalleCompra();
-        crearFactura.setVisible(true);
-        crearFactura.setResizable(false);
-        crearFactura.tablaLibros.setModel(tablaLibrosSeleccionados.getModel());
+        DetalleCompra detalleCompra = new DetalleCompra();
+        detalleCompra.setVisible(true);
+        detalleCompra.setResizable(false);
+        tablaLibros.setModel(modelo);
 
     }//GEN-LAST:event_btnVerFacturaActionPerformed
 
@@ -484,16 +484,31 @@ public class ComprarLibros extends javax.swing.JFrame {
     }
 
     public void añadirLibro() {
+        int columnas = tablaLibrosDisponibles.getColumnCount();
+        Object[] filas = new Object[columnas];
         int filaSeleccionada = tablaLibrosDisponibles.getSelectedRow();
         if (filaSeleccionada >= 0) {
-            int columnas = tablaLibrosDisponibles.getColumnCount();
-            int fila = tablaLibrosDisponibles.getRowCount();
-            Object[] filas = new Object[columnas];
-            for (int i = 0; i < filas.length; i++) {
-                filas[i] = tablaLibrosDisponibles.getValueAt(filaSeleccionada, i);
+            int filasLibro = tablaLibrosSeleccionados.getRowCount();
+            if (filasLibro == 0) {
+                for (int i = 0; i < filas.length; i++) {
+                    filas[i] = tablaLibrosDisponibles.getValueAt(filaSeleccionada, i);
+                }
+                modelo.addRow(filas);
+                tablaLibrosSeleccionados.setModel(modelo);
+
+            } else {
+                String ISSN = tablaLibrosDisponibles.getValueAt(filaSeleccionada, 0).toString();
+                boolean verificar = verificarAñadido(ISSN);
+                if (verificar) {
+                    for (int i = 0; i < filas.length; i++) {
+                        filas[i] = tablaLibrosDisponibles.getValueAt(filaSeleccionada, i);
+                    }
+                    modelo.addRow(filas);
+                    tablaLibrosSeleccionados.setModel(modelo);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Este Libro ya se encuentra", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
-            modelo.addRow(filas);
-            tablaLibrosSeleccionados.setModel(modelo);
         } else {
             JOptionPane.showMessageDialog(null, "No se ha seleccionado ningún Libro para añadir a su Compra", "Error", JOptionPane.ERROR_MESSAGE);
 
@@ -504,10 +519,25 @@ public class ComprarLibros extends javax.swing.JFrame {
         int filaSeleccionada = tablaLibrosSeleccionados.getSelectedRow();
         if (filaSeleccionada >= 0) {
             modelo.removeRow(filaSeleccionada);
+            DetalleCompra.tablaLibros.setModel(modelo);
             tablaLibrosSeleccionados.setModel(modelo);
         } else {
             JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguna fila para eliminar", "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private boolean verificarAñadido(String ISSN) {
+        boolean valida = true;
+        int filas = tablaLibrosSeleccionados.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            String añadido = tablaLibrosSeleccionados.getValueAt(i, 0).toString();
+            if(añadido.equals(ISSN)){
+                valida = false;
+                break;
+            }
+
+        }
+        return valida;
     }
 
 }

@@ -7,14 +7,17 @@ package Vistas;
 
 import ConexionBD.Conexion;
 import DAO.CRUD;
+import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDateChooser;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 
 import java.util.logging.Level;
@@ -39,6 +42,7 @@ public class RegistroTrabajador extends javax.swing.JFrame implements CRUD {
         limpiar();
         listar();
         llenarCombo();
+        formatearFecha();
     }
 
     /**
@@ -298,8 +302,9 @@ public class RegistroTrabajador extends javax.swing.JFrame implements CRUD {
         });
         PanelPrincipal.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 290, 100, -1));
 
-        fechaContratacion.setMaxSelectableDate(new java.util.Date(4102459295000L));
-        fechaContratacion.setMinSelectableDate(new java.util.Date(-2208971774000L));
+        fechaContratacion.setDateFormatString("yyyy-MM-dd");
+        fechaContratacion.setMaxSelectableDate(null);
+        fechaContratacion.setMinSelectableDate(null);
         PanelPrincipal.add(fechaContratacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 140, 160, -1));
 
         Fondo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Fondo.jpg"))); // NOI18N
@@ -459,7 +464,7 @@ public class RegistroTrabajador extends javax.swing.JFrame implements CRUD {
             String ApellidoP = tablaTrabajador.getValueAt(filaSeleccionada, 2).toString().trim();
             String ApellidoM = tablaTrabajador.getValueAt(filaSeleccionada, 3).toString().trim();
             String correo = tablaTrabajador.getValueAt(filaSeleccionada, 4).toString().trim();
-            Date fecha = (Date) tablaTrabajador.getValueAt(filaSeleccionada, 5);
+            Date fechasql = (Date) tablaTrabajador.getValueAt(filaSeleccionada, 5);
             String telefono = tablaTrabajador.getValueAt(filaSeleccionada, 6).toString().trim();
             String calle = tablaTrabajador.getValueAt(filaSeleccionada, 7).toString().trim();
 
@@ -468,7 +473,7 @@ public class RegistroTrabajador extends javax.swing.JFrame implements CRUD {
             txtApellidoPTrabajador.setText(ApellidoP);
             txtApellidoMTrabajador.setText(ApellidoM);
             txtCorreoTrabajador.setText(correo);
-            fechaContratacion.setDate(fecha);
+            fechaContratacion.setDate(fechasql);
             txtTelefonoTrabajador.setText(telefono);
             txtDireccionTrabajador.setText(calle);
         }
@@ -639,24 +644,12 @@ public class RegistroTrabajador extends javax.swing.JFrame implements CRUD {
         txtApellidoPTrabajador.setText("");
         txtApellidoMTrabajador.setText("");
         txtCorreoTrabajador.setText("");
-        String fecha = "01-01-0001";
-        Date fechasql = devolverFecha(fecha);
-        fechaContratacion.setDate(fechasql);
+        fechaContratacion.setDate(null);
         txtTelefonoTrabajador.setText("");
         txtDireccionTrabajador.setText("");
         txtBusqueda.setText("");
     }
 
-    public Date devolverFecha(String fecha) {
-        Date fechasql = null;
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD");
-            fechasql = sdf.parse(fecha);
-        } catch (ParseException ex) {
-            Logger.getLogger(RegistroTrabajador.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return fechasql;
-    }
 
     @Override
     public void modificar() {
@@ -671,7 +664,7 @@ public class RegistroTrabajador extends javax.swing.JFrame implements CRUD {
             String telefono = txtTelefonoTrabajador.getText().trim();
             String calle = txtDireccionTrabajador.getText().trim();
             String sql = "UPDATE Trabajador SET RUT='" + rut + "', NOMBRE='" + nombre + "', APELLIDO_PATERNO='" + ApellidoP + "', APELLIDO_MATERNO='" + ApellidoM + "'"
-                    + ",CORREO_ELECTRÓNICO ='" + correo + "',FECHA_CONTRATACIÓN = TO_DATE('" + fechaentra + "','YYYY-MM-DD')"
+                    + ",CORREO_ELECTRÓNICO ='" + correo + "',FECHA_CONTRATACIÓN = TO_DATE('" + fechaentra + "','YYYY-MM-dd')"
                     + ", TELEFONO='" + telefono + "' , CALLE='" + calle + "' WHERE RUT ='" + modificar + "'";
             ps = con.prepareStatement(sql);
             int res = ps.executeUpdate();
@@ -704,15 +697,16 @@ public class RegistroTrabajador extends javax.swing.JFrame implements CRUD {
     @Override
     public void insertar() {
         try {
-            String sql = "INSERT INTO Trabajador VALUES(?,?,?,?,?,TO_DATE(?,'YYYY-MM-DD'),?,?)";
+            String sql = "INSERT INTO Trabajador VALUES(?,?,?,?,?,TO_DATE(?,'YYYY-MM-dd'),?,?)";
             ps = con.prepareStatement(sql);
             ps.setString(1, txtRutTrabajador.getText().trim());
             ps.setString(2, txtNombreTrabajador.getText().trim());
             ps.setString(3, txtApellidoPTrabajador.getText().trim());
             ps.setString(4, txtApellidoMTrabajador.getText().trim());
             ps.setString(5, txtCorreoTrabajador.getText().trim());
-            Date fecha = fechaContratacion.getDate();
-            ps.setDate(6, new java.sql.Date(fecha.getTime()));
+            Date fechas = fechaContratacion.getDate();
+            
+            ps.setDate(6, new java.sql.Date(fechas.getTime()));
 
             ps.setString(7, txtTelefonoTrabajador.getText().trim());
             ps.setString(8, txtDireccionTrabajador.getText().trim());
@@ -740,7 +734,7 @@ public class RegistroTrabajador extends javax.swing.JFrame implements CRUD {
             else if (txtTelefonoTrabajador.getText().trim().length() == 1 || txtCorreoTrabajador.getText().trim().equals("-")) {
                 JOptionPane.showMessageDialog(null, "No se ingresó el Telefono", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
             }else {
-                JOptionPane.showMessageDialog(null, "No se ha ingresado correctamente a la BD, ya está ese nombre en uso", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
             }
 
         }
@@ -839,5 +833,21 @@ public class RegistroTrabajador extends javax.swing.JFrame implements CRUD {
             Logger.getLogger(RegistroAutor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public void formatearFecha(){
+        
+        try {
+            
+            Date fecha = new Date();
+            String inicio = "2013-01-01";
+            Date fechaParseada= new SimpleDateFormat("YYYY-MM-dd").parse(inicio);
+            
+            fechaContratacion.setMinSelectableDate(fechaParseada);
+            fechaContratacion.setMaxSelectableDate(fecha);
+        } catch (ParseException ex) {
+            Logger.getLogger(RegistroTrabajador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 
 }

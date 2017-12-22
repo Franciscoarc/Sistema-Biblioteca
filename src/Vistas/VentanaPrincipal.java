@@ -28,12 +28,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenuItem3 = new javax.swing.JMenuItem();
-        Titulo = new javax.swing.JLabel();
-        BtnComprarLibros2 = new javax.swing.JButton();
-        BtnDevolverLibro = new javax.swing.JButton();
-        BtnArrendarLibro = new javax.swing.JButton();
-        BtnSalir = new javax.swing.JButton();
-        Fondo = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        btnComprarLibros = new javax.swing.JButton();
+        btnDevolverLibros = new javax.swing.JButton();
+        btnPrestamoLibros = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         MenuAutor = new javax.swing.JMenu();
         RegistrarAutor = new javax.swing.JMenuItem();
@@ -57,45 +58,58 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuItem3.setText("jMenuItem3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        Titulo.setFont(new java.awt.Font("Cambria Math", 1, 36)); // NOI18N
-        Titulo.setForeground(new java.awt.Color(255, 255, 255));
-        Titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Titulo.setText("Sistema de Gestión de Biblioteca");
+        jPanel1.setLayout(null);
 
-        BtnComprarLibros2.setText("Comprar Libro");
-        BtnComprarLibros2.setOpaque(false);
-        BtnComprarLibros2.addActionListener(new java.awt.event.ActionListener() {
+        jLabel2.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Sistema de Gestión de Biblioteca");
+        jPanel1.add(jLabel2);
+        jLabel2.setBounds(110, 20, 540, 44);
+
+        btnComprarLibros.setText("Comprar Libros");
+        btnComprarLibros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnComprarLibros2ActionPerformed(evt);
+                btnComprarLibrosActionPerformed(evt);
             }
         });
+        jPanel1.add(btnComprarLibros);
+        btnComprarLibros.setBounds(100, 100, 140, 50);
 
-        BtnDevolverLibro.setText("Devolver Libro");
-        BtnDevolverLibro.setOpaque(false);
-        BtnDevolverLibro.addActionListener(new java.awt.event.ActionListener() {
+        btnDevolverLibros.setText("Devolver Libros");
+        btnDevolverLibros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnDevolverLibroActionPerformed(evt);
+                btnDevolverLibrosActionPerformed(evt);
             }
         });
+        jPanel1.add(btnDevolverLibros);
+        btnDevolverLibros.setBounds(550, 100, 140, 50);
 
-        BtnArrendarLibro.setText("Arrendar Libro");
-        BtnArrendarLibro.setOpaque(false);
-        BtnArrendarLibro.addActionListener(new java.awt.event.ActionListener() {
+        btnPrestamoLibros.setText("Prestamo de Libros");
+        btnPrestamoLibros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnArrendarLibroActionPerformed(evt);
+                btnPrestamoLibrosActionPerformed(evt);
             }
         });
+        jPanel1.add(btnPrestamoLibros);
+        btnPrestamoLibros.setBounds(330, 100, 140, 50);
 
-        BtnSalir.setText("Salir");
-        BtnSalir.setOpaque(false);
-        BtnSalir.addActionListener(new java.awt.event.ActionListener() {
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnSalirActionPerformed(evt);
+                btnSalirActionPerformed(evt);
             }
         });
+        jPanel1.add(btnSalir);
+        btnSalir.setBounds(580, 340, 140, 50);
 
-        Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Fondo.jpg"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/FondoLibro.jpg"))); // NOI18N
+        jPanel1.add(jLabel1);
+        jLabel1.setBounds(0, 0, 780, 420);
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 780, 420));
 
         MenuAutor.setText("Autor");
 
@@ -207,67 +221,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         setJMenuBar(jMenuBar1);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(91, Short.MAX_VALUE)
-                .addComponent(Titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(210, 210, 210)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BtnDevolverLibro)
-                    .addComponent(BtnComprarLibros2))
-                .addGap(90, 90, 90)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(BtnArrendarLibro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BtnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(Fondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(Titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(73, 73, 73)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BtnComprarLibros2)
-                    .addComponent(BtnArrendarLibro))
-                .addGap(66, 66, 66)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BtnSalir)
-                    .addComponent(BtnDevolverLibro))
-                .addContainerGap(202, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(Fondo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void BtnDevolverLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDevolverLibroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BtnDevolverLibroActionPerformed
-
-    private void BtnArrendarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnArrendarLibroActionPerformed
-        Prestamos prestamos = new  Prestamos();
-        prestamos.setVisible(true);
-        prestamos.setResizable(false);
-    }//GEN-LAST:event_BtnArrendarLibroActionPerformed
-
-    private void BtnComprarLibros2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnComprarLibros2ActionPerformed
-        ComprarLibros comprarLibros = new ComprarLibros();
-        comprarLibros.setResizable(false);
-        comprarLibros.setVisible(true);
-    }//GEN-LAST:event_BtnComprarLibros2ActionPerformed
-
-    private void BtnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSalirActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_BtnSalirActionPerformed
 
     private void RegistrarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarAutorActionPerformed
         RegistroAutor registroAutor = new RegistroAutor();
@@ -323,6 +278,28 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         registroTrabajador.setResizable(false);
     }//GEN-LAST:event_RegistrarTrabajadorActionPerformed
 
+    private void btnComprarLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarLibrosActionPerformed
+        ComprarLibros comprarLibros = new ComprarLibros();
+        comprarLibros.setVisible(true);
+        comprarLibros.setResizable(false);
+    }//GEN-LAST:event_btnComprarLibrosActionPerformed
+
+    private void btnPrestamoLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrestamoLibrosActionPerformed
+        Prestamos prestamos = new Prestamos();
+        prestamos.setVisible(true);
+        prestamos.setResizable(false);
+    }//GEN-LAST:event_btnPrestamoLibrosActionPerformed
+
+    private void btnDevolverLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolverLibrosActionPerformed
+        DevolverLibros devolverLibros = new DevolverLibros();
+        devolverLibros.setVisible(true);
+        devolverLibros.setResizable(false);
+    }//GEN-LAST:event_btnDevolverLibrosActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnSalirActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -360,11 +337,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BtnArrendarLibro;
-    private javax.swing.JButton BtnComprarLibros2;
-    private javax.swing.JButton BtnDevolverLibro;
-    private javax.swing.JButton BtnSalir;
-    private javax.swing.JLabel Fondo;
     private javax.swing.JMenu MenuAutor;
     private javax.swing.JMenu MenuCategoria;
     private javax.swing.JMenu MenuDistribuidor;
@@ -383,8 +355,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem RegistrarLibros;
     private javax.swing.JMenuItem RegistrarMetodoPago;
     private javax.swing.JMenuItem RegistrarTrabajador;
-    private javax.swing.JLabel Titulo;
+    private javax.swing.JButton btnComprarLibros;
+    private javax.swing.JButton btnDevolverLibros;
+    private javax.swing.JButton btnPrestamoLibros;
+    private javax.swing.JButton btnSalir;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
