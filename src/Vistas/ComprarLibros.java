@@ -1,8 +1,10 @@
 package Vistas;
 
 import ConexionBD.Conexion;
+import static Vistas.DetalleCompra.IVA;
 import java.sql.Connection;
 import static Vistas.DetalleCompra.tablaLibros;
+import static java.lang.Math.round;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -17,6 +19,11 @@ public class ComprarLibros extends javax.swing.JFrame {
     PreparedStatement ps;
     ResultSet rs;
     DefaultTableModel modelo = new DefaultTableModel();
+    Object[] filas;
+    public int precioReferencial;
+    public int precioNeto;
+    public double costoIva;
+    public double precioConIVA;
 
     public ComprarLibros() {
 
@@ -485,16 +492,21 @@ public class ComprarLibros extends javax.swing.JFrame {
 
     public void añadirLibro() {
         int columnas = tablaLibrosDisponibles.getColumnCount();
-        Object[] filas = new Object[columnas];
+        filas = new Object[columnas];
         int filaSeleccionada = tablaLibrosDisponibles.getSelectedRow();
         if (filaSeleccionada >= 0) {
             int filasLibro = tablaLibrosSeleccionados.getRowCount();
             if (filasLibro == 0) {
                 for (int i = 0; i < filas.length; i++) {
                     filas[i] = tablaLibrosDisponibles.getValueAt(filaSeleccionada, i);
+
                 }
                 modelo.addRow(filas);
                 tablaLibrosSeleccionados.setModel(modelo);
+                
+
+                precioNeto();
+                String sql = "123";
 
             } else {
                 String ISSN = tablaLibrosDisponibles.getValueAt(filaSeleccionada, 0).toString();
@@ -505,6 +517,8 @@ public class ComprarLibros extends javax.swing.JFrame {
                     }
                     modelo.addRow(filas);
                     tablaLibrosSeleccionados.setModel(modelo);
+                    precioNeto();
+
                 } else {
                     JOptionPane.showMessageDialog(null, "Este Libro ya se encuentra", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -519,8 +533,10 @@ public class ComprarLibros extends javax.swing.JFrame {
         int filaSeleccionada = tablaLibrosSeleccionados.getSelectedRow();
         if (filaSeleccionada >= 0) {
             modelo.removeRow(filaSeleccionada);
-            DetalleCompra.tablaLibros.setModel(modelo);
+
+            
             tablaLibrosSeleccionados.setModel(modelo);
+            precioNeto();
         } else {
             JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguna fila para eliminar", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -528,10 +544,10 @@ public class ComprarLibros extends javax.swing.JFrame {
 
     private boolean verificarAñadido(String ISSN) {
         boolean valida = true;
-        int filas = tablaLibrosSeleccionados.getRowCount();
-        for (int i = 0; i < filas; i++) {
+        int filasTabla = tablaLibrosSeleccionados.getRowCount();
+        for (int i = 0; i < filasTabla; i++) {
             String añadido = tablaLibrosSeleccionados.getValueAt(i, 0).toString();
-            if(añadido.equals(ISSN)){
+            if (añadido.equals(ISSN)) {
                 valida = false;
                 break;
             }
@@ -540,4 +556,18 @@ public class ComprarLibros extends javax.swing.JFrame {
         return valida;
     }
 
+    public void precioNeto() {
+        int suma = 0;
+        for (int i = 0; i < tablaLibrosSeleccionados.getRowCount(); i++) {
+            suma = suma + Integer.parseInt(tablaLibrosSeleccionados.getValueAt(i, 6).toString());
+        }
+        precioReferencial = suma;
+        
+
+        System.out.println("Precio referencial:"+precioReferencial);
+        System.out.println("Costo del IVA:"+round(costoIva));
+        System.out.println("Precio con IVA:"+round(precioConIVA));
+    }
+    
 }
+

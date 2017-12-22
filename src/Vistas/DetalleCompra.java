@@ -28,6 +28,9 @@ public class DetalleCompra extends javax.swing.JFrame {
     ResultSet rs;
     DefaultTableModel modeloLibros = new DefaultTableModel();
     ComprarLibros comprarLibros = new ComprarLibros();
+    int precioNeto;
+    int precioTotal;
+    int iva;
 
     public DetalleCompra() {
         initComponents();
@@ -530,4 +533,5 @@ public class DetalleCompra extends javax.swing.JFrame {
         }
     }
 
+    
 }
