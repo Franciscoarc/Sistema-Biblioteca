@@ -7,6 +7,7 @@ package Vistas;
 
 import ConexionBD.Conexion;
 import DAO.CRUD;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -59,7 +60,7 @@ public class RegistroMetodoPago extends javax.swing.JFrame implements CRUD {
         lblBusqueda = new javax.swing.JLabel();
         txtBusqueda = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
-        txtMetodoPago = new javax.swing.JFormattedTextField();
+        txtMetodoPago = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         MenuAutor = new javax.swing.JMenu();
@@ -186,13 +187,11 @@ public class RegistroMetodoPago extends javax.swing.JFrame implements CRUD {
         jPanel1.add(btnBuscar);
         btnBuscar.setBounds(610, 280, 100, 23);
 
-        try {
-            txtMetodoPago.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("????????????????????????")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        txtMetodoPago.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        txtMetodoPago.setFocusLostBehavior(javax.swing.JFormattedTextField.PERSIST);
+        txtMetodoPago.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtMetodoPagoKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtMetodoPago);
         txtMetodoPago.setBounds(370, 90, 150, 20);
 
@@ -418,6 +417,10 @@ public class RegistroMetodoPago extends javax.swing.JFrame implements CRUD {
         this.dispose();
     }//GEN-LAST:event_RegistrarTrabajadorActionPerformed
 
+    private void txtMetodoPagoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMetodoPagoKeyTyped
+        validarLetras(evt);
+    }//GEN-LAST:event_txtMetodoPagoKeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -490,7 +493,7 @@ public class RegistroMetodoPago extends javax.swing.JFrame implements CRUD {
     private javax.swing.JLabel lblCategoria;
     private javax.swing.JTable tablaMetodoPago;
     private javax.swing.JTextField txtBusqueda;
-    private javax.swing.JFormattedTextField txtMetodoPago;
+    private javax.swing.JTextField txtMetodoPago;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -615,6 +618,12 @@ public class RegistroMetodoPago extends javax.swing.JFrame implements CRUD {
 
         } catch (SQLException ex) {
             Logger.getLogger(RegistroAutor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void validarLetras(KeyEvent evt){
+        char letraespacio = evt.getKeyChar();
+        if(!Character.isLetter(letraespacio) && letraespacio != KeyEvent.VK_SPACE){
+            evt.consume();
         }
     }
 

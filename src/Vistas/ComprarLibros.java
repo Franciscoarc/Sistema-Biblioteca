@@ -563,6 +563,7 @@ public class ComprarLibros extends javax.swing.JFrame {
         }
         precioReferencial = suma;
         
+       
 
         System.out.println("Precio referencial:"+precioReferencial);
         System.out.println("Costo del IVA:"+round(costoIva));
