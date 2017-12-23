@@ -28,15 +28,11 @@ public class DetalleCompra extends javax.swing.JFrame {
     ResultSet rs;
     DefaultTableModel modeloLibros = new DefaultTableModel();
     ComprarLibros comprarLibros = new ComprarLibros();
-    int precioNeto;
-    int precioTotal;
-    int iva;
 
     public DetalleCompra() {
         initComponents();
         llenarComboDistribuidor();
         llenarComboPago();
-        String sql = "123";
 
     }
 
@@ -352,6 +348,7 @@ public class DetalleCompra extends javax.swing.JFrame {
         CrearFactura crearFactura = new CrearFactura();
         crearFactura.setVisible(true);
         crearFactura.setResizable(false);
+
     }//GEN-LAST:event_btnCrearFacturaActionPerformed
 
     private void btnVolverSeleccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverSeleccionActionPerformed
@@ -533,5 +530,7 @@ public class DetalleCompra extends javax.swing.JFrame {
         }
     }
 
-    
+    public void recibirDatos() {
+    }
+
 }

@@ -562,6 +562,8 @@ public class ComprarLibros extends javax.swing.JFrame {
             suma = suma + Integer.parseInt(tablaLibrosSeleccionados.getValueAt(i, 6).toString());
         }
         precioReferencial = suma;
+        costoIva = precioReferencial * IVA;
+        precioConIVA = precioReferencial + costoIva;
         
        
 

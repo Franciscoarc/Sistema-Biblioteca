@@ -7,17 +7,13 @@ package Vistas;
 
 import ConexionBD.Conexion;
 import DAO.CRUD;
-import com.toedter.calendar.JCalendar;
-import com.toedter.calendar.JDateChooser;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import java.util.logging.Level;
@@ -36,6 +32,7 @@ public class RegistroTrabajador extends javax.swing.JFrame implements CRUD {
     PreparedStatement ps;
     ResultSet rs;
     String modificar;
+    String rutmodificar;
 
     public RegistroTrabajador() {
         initComponents();
@@ -663,16 +660,23 @@ public class RegistroTrabajador extends javax.swing.JFrame implements CRUD {
             java.sql.Date fechaentra = new java.sql.Date(fechacon.getTime());
             String telefono = txtTelefonoTrabajador.getText().trim();
             String calle = txtDireccionTrabajador.getText().trim();
-            String sql = "UPDATE Trabajador SET RUT='" + rut + "', NOMBRE='" + nombre + "', APELLIDO_PATERNO='" + ApellidoP + "', APELLIDO_MATERNO='" + ApellidoM + "'"
+            String sqlActualizar = "UPDATE PRESTAMO SET TRABAJADOR_RUT = '"+rut+"' WHERE TRABAJADOR_RUT = '"+modificar+"'";
+            String sqlTrabajador = "UPDATE Trabajador SET RUT='" + rut + "', NOMBRE='" + nombre + "', APELLIDO_PATERNO='" + ApellidoP + "', APELLIDO_MATERNO='" + ApellidoM + "'"
                     + ",CORREO_ELECTRÓNICO ='" + correo + "',FECHA_CONTRATACIÓN = TO_DATE('" + fechaentra + "','YYYY-MM-dd')"
                     + ", TELEFONO='" + telefono + "' , CALLE='" + calle + "' WHERE RUT ='" + modificar + "'";
-            ps = con.prepareStatement(sql);
-            int res = ps.executeUpdate();
-            if (res > 0) {
-                limpiar();
-                listar();
-                JOptionPane.showMessageDialog(null, "Se ha modificar satisfactoriamente su registro", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
-            }
+            ps = con.prepareStatement(sqlTrabajador);
+            ps.executeUpdate();
+            
+            ps = con.prepareStatement(sqlActualizar);
+            ps.setString(1, rut);
+            ps.executeUpdate();
+            
+            con.commit();
+            limpiar();
+            listar();
+            JOptionPane.showMessageDialog(null, "Se ha modificado satisfactoriamente su registro", "Error",JOptionPane.ERROR_MESSAGE);
+                    
+            
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
             //JOptionPane.showMessageDialog(null, "Ya existe el RUT en nuestra Base de datos", "Confirmación", JOptionPane.ERROR_MESSAGE);
@@ -699,6 +703,7 @@ public class RegistroTrabajador extends javax.swing.JFrame implements CRUD {
         try {
             String sql = "INSERT INTO Trabajador VALUES(?,?,?,?,?,TO_DATE(?,'YYYY-MM-dd'),?,?)";
             ps = con.prepareStatement(sql);
+            rutmodificar = txtRutTrabajador.getText().trim();
             ps.setString(1, txtRutTrabajador.getText().trim());
             ps.setString(2, txtNombreTrabajador.getText().trim());
             ps.setString(3, txtApellidoPTrabajador.getText().trim());

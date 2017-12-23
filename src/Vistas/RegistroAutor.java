@@ -395,6 +395,8 @@ public class RegistroAutor extends javax.swing.JFrame implements CRUD {
 
     private void tablaAutorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaAutorMouseClicked
         if (evt.getClickCount() == 2) {
+            btnModificar.setEnabled(true);
+            btnRegistrar.setEnabled(false);
             int filaSeleccionada = tablaAutor.getSelectedRow();
             String RUT = tablaAutor.getValueAt(filaSeleccionada, 0).toString().trim();
             modificar = tablaAutor.getValueAt(filaSeleccionada, 0).toString().trim();
@@ -578,17 +580,21 @@ public class RegistroAutor extends javax.swing.JFrame implements CRUD {
 
     public void validarLetras(KeyEvent evt){
         char letraespacio = evt.getKeyChar();
-        if(!Character.isLetter(letraespacio) && letraespacio != KeyEvent.VK_SPACE){
+        
+        if(!Character.isLetter(letraespacio) && letraespacio != KeyEvent.VK_SPACE ){
             evt.consume();
+            
         }
     }
     @Override
     public void limpiar() {
+        btnModificar.setEnabled(false);
         txtRutAutor.setText("");
         txtNombreAutor.setText("");
         txtApellidoPAutor.setText("");
         txtApellidoMAutor.setText("");
         txtBusqueda.setText("");
+        
     }
 
     @Override
@@ -604,6 +610,7 @@ public class RegistroAutor extends javax.swing.JFrame implements CRUD {
             if (res > 0) {
                 limpiar();
                 listar();
+                btnRegistrar.setEnabled(true);
                 JOptionPane.showMessageDialog(null, "Se ha modificar satisfactoriamente su registro", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (SQLException ex) {
@@ -666,7 +673,7 @@ public class RegistroAutor extends javax.swing.JFrame implements CRUD {
         } catch (SQLException ex) {
             String rut = txtRutAutor.getText().trim();
             int largo = rut.length();
-            String verifica = rut.substring(largo);
+            String verifica = rut.substring(largo-1);
             String punto = Character.toString(rut.charAt(0));
             if (txtRutAutor.getText().trim().equals(".   .   -")) {
                 JOptionPane.showMessageDialog(null, "No se ingresó RUT", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
@@ -679,8 +686,18 @@ public class RegistroAutor extends javax.swing.JFrame implements CRUD {
                 JOptionPane.showMessageDialog(null, "No se ingresó el Apellido Paterno", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
             } else if (txtApellidoMAutor.getText().trim().length() == 0 || txtApellidoMAutor.getText().trim().equals("")) {
                 JOptionPane.showMessageDialog(null, "No se ingresó el Apellido Materno", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(null, "No se ha ingresado correctamente a la BD, ya está ese nombre en uso", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
+            } else if(txtNombreAutor.getText().trim().length() >20){
+                JOptionPane.showMessageDialog(null, "Ha excedido el largo del campo", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
+            }
+            else if(txtNombreAutor.getText().trim().length() >20){
+                 JOptionPane.showMessageDialog(null, "Ha excedido el largo del campo", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
+            
+            }
+            else if(txtApellidoMAutor.getText().trim().length() >20){
+                 JOptionPane.showMessageDialog(null, "Ha excedido el largo del campo", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
+            }
+            else{
+                
             }
         }
     }

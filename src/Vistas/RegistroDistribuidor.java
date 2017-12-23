@@ -7,6 +7,7 @@ package Vistas;
 
 import ConexionBD.Conexion;
 import DAO.CRUD;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -67,10 +68,10 @@ public class RegistroDistribuidor extends javax.swing.JFrame implements CRUD {
         lblDireccionDistribuidor = new javax.swing.JLabel();
         txtDireccionDistribuidor = new javax.swing.JTextField();
         txtRutDistribuidor = new javax.swing.JFormattedTextField();
-        txtNombreDistribuidor = new javax.swing.JFormattedTextField();
         txtTelefonoDistribuidor = new javax.swing.JFormattedTextField();
         comboDistribuidor = new javax.swing.JComboBox<>();
         btnBuscar = new javax.swing.JButton();
+        txtNombreDistribuidor = new javax.swing.JTextField();
         Fondo = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         MenuAutor = new javax.swing.JMenu();
@@ -221,14 +222,6 @@ public class RegistroDistribuidor extends javax.swing.JFrame implements CRUD {
         PanelPrincipal.add(txtRutDistribuidor, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 80, 160, -1));
 
         try {
-            txtNombreDistribuidor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("????????????????????????????")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        txtNombreDistribuidor.setFocusLostBehavior(javax.swing.JFormattedTextField.PERSIST);
-        PanelPrincipal.add(txtNombreDistribuidor, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 80, 160, -1));
-
-        try {
             txtTelefonoDistribuidor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#-#######")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
@@ -246,7 +239,14 @@ public class RegistroDistribuidor extends javax.swing.JFrame implements CRUD {
         });
         PanelPrincipal.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 280, 100, -1));
 
-        Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo.jpg"))); // NOI18N
+        txtNombreDistribuidor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreDistribuidorKeyTyped(evt);
+            }
+        });
+        PanelPrincipal.add(txtNombreDistribuidor, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 80, 160, -1));
+
+        Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Fondo.jpg"))); // NOI18N
         PanelPrincipal.add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 500));
 
         MenuAutor.setText("Autor");
@@ -471,6 +471,10 @@ public class RegistroDistribuidor extends javax.swing.JFrame implements CRUD {
         this.dispose();
     }//GEN-LAST:event_RegistrarTrabajadorActionPerformed
 
+    private void txtNombreDistribuidorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreDistribuidorKeyTyped
+        validarLetras(evt);
+    }//GEN-LAST:event_txtNombreDistribuidorKeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -551,7 +555,7 @@ public class RegistroDistribuidor extends javax.swing.JFrame implements CRUD {
     private javax.swing.JTable tablaDistribuidor;
     private javax.swing.JTextField txtBusqueda;
     private javax.swing.JTextField txtDireccionDistribuidor;
-    private javax.swing.JFormattedTextField txtNombreDistribuidor;
+    private javax.swing.JTextField txtNombreDistribuidor;
     private javax.swing.JFormattedTextField txtRutDistribuidor;
     private javax.swing.JFormattedTextField txtTelefonoDistribuidor;
     // End of variables declaration//GEN-END:variables
@@ -720,6 +724,12 @@ public class RegistroDistribuidor extends javax.swing.JFrame implements CRUD {
 
         } catch (SQLException ex) {
             Logger.getLogger(RegistroAutor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void validarLetras(KeyEvent evt){
+        char letraespacio = evt.getKeyChar();
+        if(!Character.isLetter(letraespacio) && letraespacio != KeyEvent.VK_SPACE){
+            evt.consume();
         }
     }
 
